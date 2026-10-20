@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Haytham's English Studio | Napoleon & The Secrets of the Pyramids</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Popper & Tippy.js for Interactive Vocabulary Tooltips -->
+  <script src="https://unpkg.com/@popperjs/core@2"></script>
+  <script src="https://unpkg.com/tippy.js@6"></script>
+  <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/animations/shift-away.css" />
+
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+  <style>
+    :root {
+      --bg-page: #f6f1e7;
+      --bg-card: #ffffff;
+      --bg-subcard: #f9f6f0;
+      --bg-callout: #fff8eb;
+      --border-main: #d8cbb8;
+      --border-strong: #b49a78;
+      --text-primary: #181512;
+      --text-secondary: #3d352e;
+      --accent-primary: #8c5218;
+      --accent-bg: #fef3c7;
+      --accent-text: #5c3409;
+      --tab-inactive-bg: #efe8dc;
+      --tab-inactive-text: #26211d;
+      --tab-active-bg: #8c5218;
+      --tab-active-text: #ffffff;
+    }
+
+    body.night-mode {
+      --bg-page: #0d1520;
+      --bg-card: #162232;
+      --bg-subcard: #1e2e42;
+      --bg-callout: #23354d;
+      --border-main: #334b68;
+      --border-strong: #527399;
+      --text-primary: #f8fafc;
+      --text-secondary: #dbe4f0;
+      --accent-primary: #f59e0b;
+      --accent-bg: #3b2f16;
+      --accent-text: #fde68a;
+      --tab-inactive-bg: #1e2e42;
+      --tab-inactive-text: #f1f5f9;
+      --tab-active-bg: #d97706;
+      --tab-active-text: #ffffff;
+    }
+
+    body {
+      background-color: var(--bg-page);
+      color: var(--text-primary);
+      transition: background-color 0.25s ease, color 0.25s ease;
+    }
+
+    .studio-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-main);
+      color: var(--text-primary);
+      border-radius: 1.25rem;
+      box-shadow: 0 10px 28px -8px rgba(24, 21, 18, 0.08);
+    }
+
+    .sub-card {
+      background-color: var(--bg-subcard);
+      border: 1px solid var(--border-main);
+      color: var(--text-primary);
+      border-radius: 0.9rem;
+    }
+
+    .callout-box {
+      background-color: var(--bg-callout);
+      border: 1px solid var(--border-strong);
+      border-left: 4px solid var(--accent-primary);
+      color: var(--text-primary);
+      border-radius: 0.75rem;
+    }
+
+    .text-body {
+      color: var(--text-secondary);
+    }
+
+    .tab-btn {
+      background-color: var(--tab-inactive-bg);
+      color: var(--tab-inactive-text);
+      border: 1px solid var(--border-main);
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn:hover {
+      border-color: var(--accent-primary);
+      transform: translateY(-1px);
+    }
+
+    .tab-btn.active {
+      background-color: var(--tab-active-bg);
+      color: var(--tab-active-text);
+      border-color: var(--tab-active-bg);
+      box-shadow: 0 4px 12px rgba(140, 82, 24, 0.28);
+    }
+
+    .vocab-highlight {
+      border-bottom: 2px dashed var(--accent-primary);
+      font-weight: 700;
+      color: var(--accent-primary);
+      cursor: help;
+      padding: 0 3px;
+      border-radius: 4px;
+      background-color: var(--accent-bg);
+    }
+
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body class="font-sans antialiased min-h-screen pb-16">
+
+  <!-- TOP BANNER -->
+  <div style="background: linear-gradient(90deg, #5c3409, #8c5218, #193746); color: #ffffff;" class="text-xs font-bold py-2.5 px-4 shadow-sm">
+    <div class="max-w-6xl mx-auto flex items-center justify-between">
+      <span class="flex items-center gap-2 tracking-wide">
+        <i class="fa-solid fa-pyramid text-amber-300"></i>
+        <span>PRE-LESSON &amp; CONVERSATION STUDIO • SPECIAL EDITION FOR HAYTHAM 🇪🇬</span>
+      </span>
+      <button onclick="toggleTheme()" id="theme-btn" class="px-3 py-1 rounded-full bg-white/20 hover:bg-white/30 text-white transition text-xs font-bold flex items-center gap-1.5">
+        <i class="fa-solid fa-moon"></i> <span>Switch to Night Mode</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header class="max-w-6xl mx-auto px-4 pt-6 pb-4">
+    <div class="studio-card p-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div class="flex items-start sm:items-center gap-4">
+        <div style="background: linear-gradient(135deg, #8c5218, #b4691e); color: #ffffff;" class="w-14 h-14 rounded-2xl flex items-center justify-center font-serif text-3xl font-bold shadow-md shrink-0">
+          H
+        </div>
+        <div>
+          <div class="flex flex-wrap items-center gap-2">
+            <span style="background-color: var(--accent-bg); color: var(--accent-text); border: 1px solid var(--border-strong);" class="text-xs font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full">
+              Interactive Pre-Lesson Guide
+            </span>
+            <span class="text-xs font-mono font-bold" style="color: var(--accent-primary);">
+              <i class="fa-solid fa-clock mr-1"></i>10–15 Min Prep Before Class
+            </span>
+          </div>
+          <h1 class="font-serif text-2xl sm:text-4xl font-bold mt-1">
+            Napoleon &amp; The Secrets of the Pyramids
+          </h1>
+          <p class="text-sm text-body font-medium mt-0.5">
+            From the 167 French Savants &amp; the Rosetta Stone (1798) to Modern Cosmic-Ray Pyramid Scans
+          </p>
+        </div>
+      </div>
+
+      <!-- Tooltip Hint -->
+      <div class="sub-card px-4 py-3 text-xs font-semibold shrink-0">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-wand-magic-sparkles" style="color: var(--accent-primary);"></i>
+          <span>Hover over <span class="vocab-highlight" data-tippy-content="Highlighted words show instant definitions when you hover or click!">highlighted words</span> for instant definitions!</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- NAVIGATION TABS (HIGH CONTRAST) -->
+  <div class="max-w-6xl mx-auto px-4 mb-6">
+    <div class="studio-card p-2.5 flex flex-wrap gap-2">
+      <button onclick="switchTab(0)" id="tab-btn-0" class="tab-btn active flex-1 min-w-[150px] py-3 px-4 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2">
+        <i class="fa-solid fa-book-open"></i> 1. The Story &amp; Visuals
+      </button>
+      <button onclick="switchTab(1)" id="tab-btn-1" class="tab-btn flex-1 min-w-[150px] py-3 px-4 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2">
+        <i class="fa-solid fa-scale-balanced"></i> 2. Myth vs. Fact
+      </button>
+      <button onclick="switchTab(2)" id="tab-btn-2" class="tab-btn flex-1 min-w-[150px] py-3 px-4 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2">
+        <i class="fa-solid fa-layer-group"></i> 3. Vocab Vault (12)
+      </button>
+      <button onclick="switchTab(3)" id="tab-btn-3" class="tab-btn flex-1 min-w-[150px] py-3 px-4 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2">
+        <i class="fa-solid fa-magnifying-glass-chart"></i> 4. Grammar Lab
+      </button>
+      <button onclick="switchTab(4)" id="tab-btn-4" class="tab-btn flex-1 min-w-[150px] py-3 px-4 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2">
+        <i class="fa-solid fa-trophy"></i> 5. Quiz &amp; Talk Prompts
+      </button>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT CONTAINER -->
+  <main class="max-w-6xl mx-auto px-4">
+
+    <!-- =================================================================== -->
+    <!-- TAB 0: THE STORY & NANO BANANA VISUALS                              -->
+    <!-- =================================================================== -->
+    <section id="tab-0" class="tab-content active space-y-6">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+        
+        <!-- Story Card 1 -->
+        <div class="studio-card overflow-hidden flex flex-col">
+          <div class="relative h-52 overflow-hidden bg-stone-900">
+            <img src="napoleon_savants_giza.jpg" alt="Napoleon and the 167 Savants at Giza" class="w-full h-full object-cover" />
+            <span style="background-color: #181512; color: #fcd34d;" class="absolute top-3 left-3 text-xs font-mono font-bold px-3 py-1 rounded-lg shadow">
+              Part 1 • July 1798
+            </span>
+          </div>
+          <div class="p-5 flex-1 flex flex-col justify-between">
+            <div>
+              <h3 class="font-serif text-xl font-bold mb-2">1. An Army of Soldiers... and 167 Scientists!</h3>
+              <p class="text-sm text-body leading-relaxed mb-3">
+                When 29-year-old Napoleon Bonaparte sailed to Egypt in 1798 on his military <span class="vocab-highlight" data-tippy-content="Expedition (n.): An organized journey with a specific military or scientific purpose.">expedition</span>, he did something unusual: he brought <strong>167 <span class="vocab-highlight" data-tippy-content="Savant (n.): A learned scientist or scholar with deep knowledge.">savants</span></strong>—France's top engineers, mathematicians, and artists.
+              </p>
+              <p class="text-sm text-body leading-relaxed mb-3">
+                They measured the Pyramids of Giza with scientific precision and published the 24-volume <em>Description de l'Égypte</em>, which founded modern Egyptology as a lasting <span class="vocab-highlight" data-tippy-content="Legacy (n.): Something handed down or left behind in history.">legacy</span>.
+              </p>
+            </div>
+            <div class="callout-box p-3 text-xs">
+              <strong>Famous Quote at Giza:</strong> “Soldiers! From the heights of these pyramids, forty centuries look down upon you.” — Napoleon (July 21, 1798)
+            </div>
+          </div>
+        </div>
+
+        <!-- Story Card 2 -->
+        <div class="studio-card overflow-hidden flex flex-col">
+          <div class="relative h-52 overflow-hidden bg-stone-900">
+            <img src="rosetta_stone_discovery.jpg" alt="Discovery of the Rosetta Stone in Rashid 1799" class="w-full h-full object-cover" />
+            <span style="background-color: #181512; color: #fcd34d;" class="absolute top-3 left-3 text-xs font-mono font-bold px-3 py-1 rounded-lg shadow">
+              Part 2 • July 1799 (Rashid)
+            </span>
+          </div>
+          <div class="p-5 flex-1 flex flex-col justify-between">
+            <div>
+              <h3 class="font-serif text-xl font-bold mb-2">2. The Rosetta Stone Unlocks Ancient Egypt</h3>
+              <p class="text-sm text-body leading-relaxed mb-3">
+                For over 1,400 years, no living person could read Egyptian hieroglyphs. In 1799, French soldiers rebuilding a fort in <strong>Rashid (Rosetta)</strong> uncovered a dark granodiorite slab carved with the same decree in <strong>three scripts</strong>: Hieroglyphs, Demotic, and Ancient Greek.
+              </p>
+              <p class="text-sm text-body leading-relaxed mb-3">
+                Because scholars could read Greek, French linguist Jean-François Champollion used it to <span class="vocab-highlight" data-tippy-content="Decipher (v.): To succeed in reading or decoding an ancient script.">decipher</span> hieroglyphs in 1822!
+              </p>
+            </div>
+            <div class="callout-box p-3 text-xs">
+              <strong>Why is it in London?</strong> When British and Ottoman forces defeated the French in 1801, Britain seized the Rosetta Stone. Today, many historians argue Britain should <span class="vocab-highlight" data-tippy-content="Repatriate (v.): To return a cultural artifact to its country of origin.">repatriate</span> it to Egypt.
+            </div>
+          </div>
+        </div>
+
+        <!-- Story Card 3 -->
+        <div class="studio-card overflow-hidden flex flex-col">
+          <div class="relative h-52 overflow-hidden bg-stone-900">
+            <img src="pyramids_ahramat_and_scan.jpg" alt="Ahramat Nile Branch and Cosmic Ray Pyramid Scan" class="w-full h-full object-cover" />
+            <span style="background-color: #181512; color: #fcd34d;" class="absolute top-3 left-3 text-xs font-mono font-bold px-3 py-1 rounded-lg shadow">
+              Part 3 • 1799 to Modern Scans
+            </span>
+          </div>
+          <div class="p-5 flex-1 flex flex-col justify-between">
+            <div>
+              <h3 class="font-serif text-xl font-bold mb-2">3. Khufu's Chamber &amp; Modern Discoveries</h3>
+              <p class="text-sm text-body leading-relaxed mb-3">
+                In August 1799, Napoleon asked to be left alone inside the dark King's Chamber of Khufu's Great Pyramid. He came out pale and shaken, saying: <em>"Even if I told you, you would never believe me."</em>
+              </p>
+              <p class="text-sm text-body leading-relaxed mb-3">
+                Today, scientists use <span class="vocab-highlight" data-tippy-content="Non-invasive (adj.): Examining or scanning without physically damaging the structure.">non-invasive</span> cosmic-ray scans (the <strong>ScanPyramids</strong> project) to reveal a hidden 9-meter <span class="vocab-highlight" data-tippy-content="Void / Chamber (n.): An empty space inside a solid structure.">void</span> above the entrance, and radar satellites mapped the lost 64-km <strong>Ahramat</strong> Nile <span class="vocab-highlight" data-tippy-content="Tributary / Branch (n.): A river branch flowing into or out of a main river.">branch</span> used for the <span class="vocab-highlight" data-tippy-content="Logistics (n.): Detailed organization of a complex operation.">logistics</span> of floating pyramid stones!
+              </p>
+            </div>
+            <div class="callout-box p-3 text-xs">
+              <strong>Next Step:</strong> Click <strong>Tab 2 (Myth vs. Fact)</strong> above to test which famous stories about Napoleon and the Pyramids are actually true!
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- TAB 1: INTERACTIVE MYTH VS. FACT BUSTER                             -->
+    <!-- =================================================================== -->
+    <section id="tab-1" class="tab-content space-y-4">
+      <div class="studio-card p-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 mb-5" style="border-bottom: 1px solid var(--border-main);">
+          <div>
+            <h2 class="font-serif text-2xl font-bold">Historical Myth vs. Fact Buster</h2>
+            <p class="text-sm text-body font-medium">Click <strong>"It's a MYTH"</strong> or <strong>"It's a FACT"</strong> on each statement below to reveal the historical proof:</p>
+          </div>
+          <span style="background-color: var(--accent-bg); color: var(--accent-text); border: 1px solid var(--border-strong);" class="text-xs font-mono px-3 py-1.5 rounded-full font-bold">
+            4 Famous Claims About Giza &amp; Napoleon
+          </span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="myth-container"></div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- TAB 2: VOCABULARY VAULT (12 CARDS + AUDIO)                          -->
+    <!-- =================================================================== -->
+    <section id="tab-2" class="tab-content space-y-4">
+      <div class="studio-card p-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 mb-5" style="border-bottom: 1px solid var(--border-main);">
+          <div>
+            <h2 class="font-serif text-2xl font-bold">Target Vocabulary Vault (12 Key Terms)</h2>
+            <p class="text-sm text-body font-medium">Click <strong>🔊 Listen</strong> to hear the pronunciation, or click any card to flip between the definition and example sentence.</p>
+          </div>
+          <div class="flex gap-2">
+            <button onclick="filterVocab('all')" id="vbtn-all" class="tab-btn active text-xs font-bold px-3.5 py-2 rounded-lg">All (12)</button>
+            <button onclick="filterVocab('napoleon')" id="vbtn-napoleon" class="tab-btn text-xs font-bold px-3.5 py-2 rounded-lg">Napoleon (6)</button>
+            <button onclick="filterVocab('pyramid')" id="vbtn-pyramid" class="tab-btn text-xs font-bold px-3.5 py-2 rounded-lg">Pyramids (6)</button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="vocab-container"></div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- TAB 3: GRAMMAR LAB (MODALS OF DEDUCTION IN THE PAST)                -->
+    <!-- =================================================================== -->
+    <section id="tab-3" class="tab-content space-y-6">
+      <div class="studio-card p-6">
+        <h2 class="font-serif text-2xl font-bold mb-1">Grammar Focus: Speculating About the Past</h2>
+        <p class="text-sm text-body font-medium mb-5">
+          When discussing archaeological mysteries or historical theories, native speakers use <strong>Modal + have + Past Participle (V3)</strong> to show how certain they are:
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+          <!-- Must have -->
+          <div class="sub-card p-4" style="border-top: 4px solid #15803d;">
+            <div class="flex items-center justify-between mb-2">
+              <span class="font-mono text-sm font-bold" style="color: #15803d;">must have + V3</span>
+              <span style="background-color: #dcfce7; color: #14532d;" class="text-xs font-bold px-2.5 py-0.5 rounded-full">90–100% Sure</span>
+            </div>
+            <p class="text-xs text-body font-medium mb-3">Use this when the evidence points to a strong logical conclusion.</p>
+            <div class="studio-card p-3 text-xs italic">
+              “The ancient builders <strong>must have used</strong> boats along the Ahramat branch to move the heaviest granite blocks.”
+            </div>
+          </div>
+
+          <!-- Might / Could have -->
+          <div class="sub-card p-4" style="border-top: 4px solid #b45309;">
+            <div class="flex items-center justify-between mb-2">
+              <span class="font-mono text-sm font-bold" style="color: #b45309;">might / could have + V3</span>
+              <span style="background-color: #fef3c7; color: #78350f;" class="text-xs font-bold px-2.5 py-0.5 rounded-full">50% Possible</span>
+            </div>
+            <p class="text-xs text-body font-medium mb-3">Use this when there are multiple possible theories and we aren't sure.</p>
+            <div class="studio-card p-3 text-xs italic">
+              “The hidden void inside Khufu's pyramid <strong>might have been</strong> a weight-relief chamber, or it <strong>could have protected</strong> a secret room.”
+            </div>
+          </div>
+
+          <!-- Couldn't have -->
+          <div class="sub-card p-4" style="border-top: 4px solid #b91c1c;">
+            <div class="flex items-center justify-between mb-2">
+              <span class="font-mono text-sm font-bold" style="color: #b91c1c;">couldn't have + V3</span>
+              <span style="background-color: #fee2e2; color: #7f1d1d;" class="text-xs font-bold px-2.5 py-0.5 rounded-full">0% Impossible</span>
+            </div>
+            <p class="text-xs text-body font-medium mb-3">Use this when historical or scientific evidence proves something did NOT happen.</p>
+            <div class="studio-card p-3 text-xs italic">
+              “Napoleon's soldiers <strong>couldn't have broken</strong> the Sphinx's nose in 1798 because drawings from 1737 show it was already missing!”
+            </div>
+          </div>
+        </div>
+
+        <!-- Mini Grammar Practice -->
+        <div class="pt-5" style="border-top: 1px solid var(--border-main);">
+          <h3 class="font-serif text-xl font-bold mb-3">Quick Grammar Check: Click the Best Modal</h3>
+          <div class="space-y-3" id="grammar-drill-container"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- TAB 4: PRE-LESSON QUIZ & CONVERSATION PROMPTS                       -->
+    <!-- =================================================================== -->
+    <section id="tab-4" class="tab-content space-y-6">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        
+        <!-- Left: Interactive Quiz -->
+        <div class="studio-card p-6 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between pb-3 mb-4" style="border-bottom: 1px solid var(--border-main);">
+              <span id="quiz-progress" class="text-xs font-mono font-bold uppercase" style="color: var(--accent-primary);">Question 1 of 5</span>
+              <span id="quiz-score" style="background-color: var(--accent-bg); color: var(--accent-text);" class="text-xs font-bold px-3 py-1 rounded-full">Score: 0 / 5</span>
+            </div>
+            <h3 id="quiz-q" class="font-serif text-xl font-bold mb-4"></h3>
+            <div id="quiz-opts" class="space-y-2.5 mb-4"></div>
+            <div id="quiz-fb" class="hidden callout-box p-3.5 text-xs leading-relaxed mb-4"></div>
+          </div>
+          <div class="flex justify-end">
+            <button id="quiz-next" onclick="nextQuiz()" class="hidden tab-btn active px-4 py-2 rounded-xl text-xs font-bold">
+              Next Question →
+            </button>
+          </div>
+        </div>
+
+        <!-- Right: Live Class Conversation Questions & Notes Scratchpad -->
+        <div class="studio-card p-6 space-y-4">
+          <h3 class="font-serif text-2xl font-bold">Questions We Will Discuss in Class</h3>
+          <ul class="space-y-2.5 text-sm">
+            <li class="sub-card p-3.5">
+              <strong>1. Egyptian Perspective:</strong> How is Napoleon’s 1798 campaign (<em>Al-Hamla Al-Faransiyya</em>) taught in schools in Egypt today? Is he remembered more as an invader, or for the scientific work of the 167 savants?
+            </li>
+            <li class="sub-card p-3.5">
+              <strong>2. The Sphinx &amp; Tourist Myths:</strong> Why do you think the rumor blaming Napoleon for the Sphinx's nose became so popular worldwide? What other myths do tourists believe about the pyramids?
+            </li>
+            <li class="sub-card p-3.5">
+              <strong>3. Inside Khufu's Pyramid:</strong> What do you think happened when Napoleon was alone inside the King's Chamber? Should scientists drill into the newly discovered voids, or keep research strictly <em>non-invasive</em>?
+            </li>
+            <li class="sub-card p-3.5">
+              <strong>4. The Rosetta Stone Debate:</strong> Now that the Grand Egyptian Museum (GEM) is open next to Giza, should the British Museum <em>repatriate</em> the Rosetta Stone to Egypt?
+            </li>
+          </ul>
+
+          <div class="pt-2">
+            <label class="block text-xs font-bold uppercase tracking-wider mb-1.5" style="color: var(--accent-primary);">
+              <i class="fa-solid fa-pen-to-square mr-1"></i> Haytham's Personal Notes / Ideas Before Class (Auto-Saved):
+            </label>
+            <textarea id="student-notes" rows="3" oninput="saveNotes()" placeholder="Jot down any thoughts, questions, or Egyptian history facts you want to share in our lesson..." class="sub-card w-full p-3 text-sm focus:outline-none"></textarea>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    // 1. MYTH VS FACT DATA
+    const myths = [
+      {
+        title: "Claim #1: The Nose of the Great Sphinx",
+        statement: "Napoleon's soldiers shot the nose off the Great Sphinx with a cannon during target practice in 1798.",
+        isFact: false,
+        verdict: "MYTH!",
+        proof: "Drawings made by Danish traveler Frederic Louis Norden in 1737 (32 years before Napoleon was even born!) already show the Sphinx without a nose. Furthermore, 15th-century Egyptian historian al-Maqrizi wrote that the nose was broken off in 1378 CE."
+      },
+      {
+        title: "Claim #2: A Wall Around All of France",
+        statement: "Napoleon and his mathematicians calculated that the stones of the three Giza pyramids could build a wall 3m high around the entire border of France.",
+        isFact: true,
+        verdict: "FACT!",
+        proof: "While visiting Giza, Napoleon and famous mathematician Gaspard Monge calculated that the stone volume of Khufu, Khafre, and Menkaure could build a wall 3 meters high and 30 cm thick around all of France!"
+      },
+      {
+        title: "Claim #3: Dragging Every Block Across Dry Sand",
+        statement: "The ancient Egyptians had to drag all 2.3 million stone blocks across miles of dry desert sand because the Nile was far away.",
+        isFact: false,
+        verdict: "MYTH!",
+        proof: "Recent radar satellite imagery and soil samples mapped a dried-up 64-km branch of the Nile—the 'Ahramat' ('Pyramids') branch—that flowed right past 31 pyramids, allowing workers to float heavy blocks to harbor temples at Giza."
+      },
+      {
+        title: "Claim #4: The Rosetta Stone's Three Scripts",
+        statement: "The Rosetta Stone unlocked ancient Egypt because it had the exact same royal decree written in Hieroglyphs, Demotic, and Ancient Greek.",
+        isFact: true,
+        verdict: "FACT!",
+        proof: "Because European and Arab scholars could still read Ancient Greek, French scholar Jean-François Champollion compared the Greek royal names (like Ptolemy and Cleopatra) to decipher Egyptian hieroglyphs in 1822."
+      }
+    ];
+
+    // 2. VOCABULARY VAULT DATA
+    const vocabList = [
+      { cat: "napoleon", word: "Savant", pos: "noun", ipa: "/sæˈvɑːnt/", ar: "عالِم / باحث", def: "A deeply learned scientist or scholar with specialized knowledge.", ex: "Napoleon brought 167 savants to map Egypt and measure the pyramids." },
+      { cat: "napoleon", word: "Decipher", pos: "verb", ipa: "/dɪˈsaɪ.fər/", ar: "يفك شفرة / يفسر", def: "To succeed in reading or decoding an ancient or hidden script.", ex: "It took 23 years after finding the Rosetta Stone to decipher Egyptian hieroglyphs." },
+      { cat: "napoleon", word: "Deface", pos: "verb", ipa: "/dɪˈfeɪs/", ar: "يشوّه معالِم", def: "To damage or spoil the surface or appearance of a monument.", ex: "Historical sketches prove that Napoleon's army did not deface the Sphinx." },
+      { cat: "napoleon", word: "Repatriate", pos: "verb", ipa: "/ˌriːˈpæt.ri.eɪt/", ar: "يعيد إلى الوطن", def: "To return a cultural artifact or person to their country of origin.", ex: "Many archaeologists believe the British Museum should repatriate the Rosetta Stone." },
+      { cat: "napoleon", word: "Expedition", pos: "noun", ipa: "/ˌek.spəˈdɪʃ.ən/", ar: "حملة / بعثة", def: "An organized journey with a specific military or scientific purpose.", ex: "While the 1798 military expedition failed, the scientific research changed history." },
+      { cat: "napoleon", word: "Legacy", pos: "noun", ipa: "/ˈleɡ.ə.si/", ar: "إرث تاريخي", def: "Something handed down or left behind in history by a person or event.", ex: "The 24-volume 'Description de l'Égypte' was the greatest legacy of the French savants." },
+      { cat: "pyramid", word: "Non-invasive", pos: "adjective", ipa: "/ˌnɒn.ɪnˈveɪ.sɪv/", ar: "غير جراحي / بدون تدمير", def: "Examining or scanning a structure without physically damaging or drilling into it.", ex: "Scientists use non-invasive cosmic-ray scans to look inside Khufu's pyramid." },
+      { cat: "pyramid", word: "Void / Chamber", pos: "noun", ipa: "/vɔɪd/", ar: "فراغ / حجرة داخلية", def: "An empty space or room enclosed inside a solid structure.", ex: "In 2023, cameras confirmed a hidden 9-meter void above the Great Pyramid's entrance." },
+      { cat: "pyramid", word: "Logistics", pos: "noun", ipa: "/ləˈdʒɪs.tɪks/", ar: "العمليات اللوجستية / التنظيم", def: "The detailed organization required to carry out a complex operation.", ex: "The logistics of transporting granite blocks from Aswan to Giza required canals and boats." },
+      { cat: "pyramid", word: "Tributary / Branch", pos: "noun", ipa: "/ˈtrɪb.jʊ.tər.i/", ar: "فرع نهر / رافد", def: "A river branch that flows into or out of a main river.", ex: "The ancient Ahramat branch of the Nile flowed right past the Giza plateau." },
+      { cat: "pyramid", word: "Skeptical", pos: "adjective", ipa: "/ˈskep.tɪ.kəl/", ar: "مشكك / مرتاب", def: "Having doubts or reservations about a claim or theory.", ex: "Historians are skeptical about Napoleon's dramatic story inside the King's Chamber." },
+      { cat: "pyramid", word: "Preservation", pos: "noun", ipa: "/ˌprez.əˈveɪ.ʃən/", ar: "حفظ / صيانة الآثار", def: "Keeping an ancient monument safe from harm or decay.", ex: "Tourism brings revenue, but preservation of the pyramids must come first." }
+    ];
+
+    // 3. GRAMMAR DRILL DATA
+    const grammarDrills = [
+      {
+        sentence: "1. Drawings from 1737 show the Sphinx already had no nose, so Napoleon's soldiers ___ broken it in 1798.",
+        options: ["must have", "couldn't have", "might have"],
+        correct: 1,
+        why: "Use 'couldn't have + V3' because 1737 evidence proves it was 100% impossible!"
+      },
+      {
+        sentence: "2. Moving 80-ton granite blocks from Aswan was massive; the builders ___ used the Nile and harbor canals.",
+        options: ["must have", "couldn't have", "can't have"],
+        correct: 0,
+        why: "Use 'must have + V3' when soil and radar evidence leads to a strong logical conclusion."
+      },
+      {
+        sentence: "3. Nobody knows for sure why Napoleon looked pale after leaving the King's Chamber—he ___ felt claustrophobic inside the dark granite room.",
+        options: ["couldn't have", "must have", "might have"],
+        correct: 2,
+        why: "Use 'might have / could have + V3' when speculating about a possible theory that isn't proven."
+      }
+    ];
+
+    // 4. PRE-LESSON QUIZ DATA
+    const quizQuestions = [
+      {
+        q: "1. Besides soldiers, who did Napoleon bring with him to Egypt in 1798?",
+        options: [
+          "167 'savants' (scientists, engineers, mathematicians, and artists)",
+          "Only French politicians and diplomats",
+          "British archaeologists from London"
+        ],
+        correct: 0,
+        explain: "Correct! Those 167 savants measured the pyramids and published the 'Description de l'Égypte'."
+      },
+      {
+        q: "2. How do historians know for sure that Napoleon's army did NOT shoot off the Sphinx's nose?",
+        options: [
+          "Napoleon never visited Giza",
+          "1737 drawings by Frederic Louis Norden and 15th-century texts by al-Maqrizi show it was already gone",
+          "The nose is still on the Sphinx today"
+        ],
+        correct: 1,
+        explain: "Spot on! The nose was missing centuries before Napoleon was even born."
+      },
+      {
+        q: "3. Where was the Rosetta Stone discovered in July 1799, and what was carved on it?",
+        options: [
+          "Inside Khufu's Pyramid, written in Arabic and French",
+          "In Rashid (Rosetta), carved with the same decree in Hieroglyphs, Demotic, and Ancient Greek",
+          "In Luxor, carved only in Ancient Greek"
+        ],
+        correct: 1,
+        explain: "Exactly! Having the same decree in three scripts allowed Champollion to decipher hieroglyphs."
+      },
+      {
+        q: "4. Which vocabulary word means 'examining the inside of a pyramid with cosmic rays WITHOUT drilling or damaging the stones'?",
+        options: [
+          "Deface",
+          "Repatriate",
+          "Non-invasive"
+        ],
+        correct: 2,
+        explain: "'Non-invasive' means scanning or testing without causing any physical damage."
+      },
+      {
+        q: "5. What did radar satellites and soil samples recently discover near the 31 pyramids between Giza and Lisht?",
+        options: [
+          "A dried-up, 64-km branch of the Nile named the 'Ahramat' branch",
+          "Napoleon's sunken flagship",
+          "A golden bridge across the desert"
+        ],
+        correct: 0,
+        explain: "Awesome! The ancient Ahramat ('Pyramids') branch explains how massive stone blocks were floated to the pyramids."
+      }
+    ];
+
+    // STATE
+    let currentVocabFilter = 'all';
+    const flippedVocab = {};
+    let currentQuiz = 0;
+    let quizScore = 0;
+    let quizAnswered = false;
+
+    function switchTab(idx) {
+      for (let i = 0; i < 5; i++) {
+        const panel = document.getElementById(`tab-${i}`);
+        const btn = document.getElementById(`tab-btn-${i}`);
+        if (i === idx) {
+          panel.classList.add('active');
+          btn.classList.add('active');
+        } else {
+          panel.classList.remove('active');
+          btn.classList.remove('active');
+        }
+      }
+    }
+
+    function renderMyths() {
+      const container = document.getElementById('myth-container');
+      container.innerHTML = myths.map((m, i) => `
+        <div class="sub-card p-5 flex flex-col justify-between">
+          <div>
+            <span class="text-xs font-mono font-bold uppercase" style="color: var(--accent-primary);">${m.title}</span>
+            <p class="font-bold text-sm sm:text-base mt-1 mb-4">“${m.statement}”</p>
+          </div>
+          <div>
+            <div class="flex gap-2.5 mb-2" id="myth-btns-${i}">
+              <button onclick="checkMyth(${i}, false)" style="background-color: #fee2e2; color: #7f1d1d; border: 1px solid #f87171;" class="flex-1 py-2 px-3 rounded-lg text-xs font-bold hover:opacity-90 transition">
+                ❌ It's a MYTH
+              </button>
+              <button onclick="checkMyth(${i}, true)" style="background-color: #dcfce7; color: #14532d; border: 1px solid #4ade80;" class="flex-1 py-2 px-3 rounded-lg text-xs font-bold hover:opacity-90 transition">
+                ✅ It's a FACT
+              </button>
+            </div>
+            <div id="myth-ans-${i}" class="hidden callout-box p-3.5 text-xs leading-relaxed mt-2"></div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function checkMyth(i, userChoice) {
+      const m = myths[i];
+      const ans = document.getElementById(`myth-ans-${i}`);
+      ans.classList.remove('hidden');
+      const right = userChoice === m.isFact;
+      ans.innerHTML = `
+        <div class="font-bold text-sm mb-1" style="color: ${right ? '#15803d' : '#b45309'};">
+          ${right ? '🎯 Spot on!' : '💡 Surprise!'} This is a <strong>${m.verdict}</strong>
+        </div>
+        <p class="text-body font-medium">${m.proof}</p>
+      `;
+    }
+
+    function filterVocab(cat) {
+      currentVocabFilter = cat;
+      ['all', 'napoleon', 'pyramid'].forEach(c => {
+        const btn = document.getElementById(`vbtn-${c}`);
+        if (c === cat) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+      renderVocab();
+    }
+
+    function speakWord(word, event) {
+      event.stopPropagation();
+      if ('speechSynthesis' in window) {
+        const u = new SpeechSynthesisUtterance(word);
+        u.lang = 'en-US';
+        u.rate = 0.92;
+        window.speechSynthesis.speak(u);
+      }
+    }
+
+    function renderVocab() {
+      const container = document.getElementById('vocab-container');
+      const items = vocabList
+        .map((v, idx) => ({ ...v, idx }))
+        .filter(v => currentVocabFilter === 'all' || v.cat === currentVocabFilter);
+
+      container.innerHTML = items.map(v => `
+        <div onclick="flipCard(${v.idx})" class="sub-card cursor-pointer p-4 hover:shadow-md transition flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-1.5">
+              <div>
+                <span class="font-serif text-xl font-bold">${v.word}</span>
+                <span class="text-xs font-mono text-body font-semibold ml-1">${v.ipa}</span>
+              </div>
+              <button onclick="speakWord('${v.word}', event)" style="background-color: var(--accent-bg); color: var(--accent-text); border: 1px solid var(--border-strong);" class="px-2.5 py-1 rounded-lg text-xs font-bold hover:opacity-90">
+                🔊 Listen
+              </button>
+            </div>
+            <div class="flex items-center justify-between text-xs mb-3 pb-2" style="border-bottom: 1px solid var(--border-main);">
+              <span class="uppercase tracking-wider font-bold" style="color: var(--accent-primary);">${v.pos}</span>
+              <span class="font-bold text-sm" style="color: var(--accent-primary);" dir="rtl">${v.ar}</span>
+            </div>
+            <p class="text-xs sm:text-sm text-body font-medium leading-relaxed">
+              ${flippedVocab[v.idx]
+                ? `<strong style="color: var(--accent-primary);">Example:</strong> <em>“${v.ex}”</em>`
+                : v.def}
+            </p>
+          </div>
+          <div class="text-xs font-bold mt-3 pt-2 flex justify-between" style="border-top: 1px solid var(--border-main); color: var(--accent-primary);">
+            <span>${flippedVocab[v.idx] ? 'Showing Example Sentence' : 'Showing Definition'}</span>
+            <span>Click to flip ↻</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function flipCard(idx) {
+      flippedVocab[idx] = !flippedVocab[idx];
+      renderVocab();
+    }
+
+    function renderGrammarDrills() {
+      const container = document.getElementById('grammar-drill-container');
+      container.innerHTML = grammarDrills.map((d, i) => `
+        <div class="sub-card p-4">
+          <p class="text-xs sm:text-sm font-bold mb-2.5">${d.sentence}</p>
+          <div class="flex flex-wrap gap-2">
+            ${d.options.map((opt, oIdx) => `
+              <button onclick="checkGrammar(${i}, ${oIdx})" class="tab-btn px-3.5 py-1.5 rounded-lg text-xs font-mono font-bold">
+                ${opt}
+              </button>
+            `).join('')}
+          </div>
+          <p id="g-fb-${i}" class="hidden text-xs mt-2.5 pt-2.5 font-medium" style="border-top: 1px solid var(--border-main);"></p>
+        </div>
+      `).join('');
+    }
+
+    function checkGrammar(dIdx, oIdx) {
+      const d = grammarDrills[dIdx];
+      const fb = document.getElementById(`g-fb-${dIdx}`);
+      fb.classList.remove('hidden');
+      if (oIdx === d.correct) {
+        fb.innerHTML = `<span class="font-bold" style="color: #15803d;">✅ Correct!</span> ${d.why}`;
+      } else {
+        fb.innerHTML = `<span class="font-bold" style="color: #b45309;">💡 Try again:</span> ${d.why}`;
+      }
+    }
+
+    function renderQuiz() {
+      const q = quizQuestions[currentQuiz];
+      quizAnswered = false;
+      document.getElementById('quiz-progress').textContent = `Question ${currentQuiz + 1} of ${quizQuestions.length}`;
+      document.getElementById('quiz-score').textContent = `Score: ${quizScore} / ${quizQuestions.length}`;
+      document.getElementById('quiz-q').textContent = q.q;
+      document.getElementById('quiz-fb').classList.add('hidden');
+      document.getElementById('quiz-next').classList.add('hidden');
+
+      const opts = document.getElementById('quiz-opts');
+      opts.innerHTML = q.options.map((opt, i) => `
+        <button onclick="answerQuiz(${i})" class="sub-card w-full text-left p-3.5 hover:shadow text-xs sm:text-sm font-semibold transition">
+          ${opt}
+        </button>
+      `).join('');
+    }
+
+    function answerQuiz(choice) {
+      if (quizAnswered) return;
+      quizAnswered = true;
+      const q = quizQuestions[currentQuiz];
+      const fb = document.getElementById('quiz-fb');
+      fb.classList.remove('hidden');
+
+      if (choice === q.correct) {
+        quizScore++;
+        fb.innerHTML = `<strong style="color: #15803d;">✅ Correct!</strong> ${q.explain}`;
+        if (currentQuiz === quizQuestions.length - 1 && typeof confetti === 'function') {
+          confetti({ particleCount: 70, spread: 60, origin: { y: 0.6 } });
+        }
+      } else {
+        fb.innerHTML = `<strong style="color: #b45309;">💡 Good try!</strong> ${q.explain}`;
+      }
+
+      document.getElementById('quiz-score').textContent = `Score: ${quizScore} / ${quizQuestions.length}`;
+      const nextBtn = document.getElementById('quiz-next');
+      nextBtn.classList.remove('hidden');
+      nextBtn.textContent = currentQuiz < quizQuestions.length - 1 ? "Next Question →" : "Restart Quiz ↻";
+    }
+
+    function nextQuiz() {
+      if (currentQuiz < quizQuestions.length - 1) {
+        currentQuiz++;
+      } else {
+        currentQuiz = 0;
+        quizScore = 0;
+      }
+      renderQuiz();
+    }
+
+    function toggleTheme() {
+      const b = document.body;
+      const btn = document.getElementById('theme-btn');
+      b.classList.toggle('night-mode');
+      if (b.classList.contains('night-mode')) {
+        btn.innerHTML = '<i class="fa-solid fa-sun"></i> <span>Switch to Day Mode</span>';
+      } else {
+        btn.innerHTML = '<i class="fa-solid fa-moon"></i> <span>Switch to Night Mode</span>';
+      }
+    }
+
+    function saveNotes() {
+      const val = document.getElementById('student-notes').value;
+      localStorage.setItem('haytham_pyramid_notes', val);
+    }
+
+    // INIT
+    window.addEventListener('DOMContentLoaded', () => {
+      renderMyths();
+      renderVocab();
+      renderGrammarDrills();
+      renderQuiz();
+      const saved = localStorage.getItem('haytham_pyramid_notes');
+      if (saved) document.getElementById('student-notes').value = saved;
+      if (typeof tippy === 'function') {
+        tippy('[data-tippy-content]', { animation: 'shift-away' });
+      }
+    });
+  </script>
+</body>
+</html>
