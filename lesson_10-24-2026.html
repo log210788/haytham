@@ -839,17 +839,14 @@
 
   </main>
   <script>
-    // -------------------------------------------------------------------------
-    // 1. DATA OBJECTS INJECTED FROM LESSON DATA
-    // -------------------------------------------------------------------------
     function v(key, displayWord) {
-      const item = (typeof VOCAB_DB !== 'undefined' && VOCAB_DB[key]) ? VOCAB_DB[key] : null;
-      const label = displayWord || (item ? item.word : key);
-      return '<span class=\"vocab-mark\" data-vkey=\"' + key + '\" onclick=\"inspectVocab(\\'' + key + '\\')\">' + label + '</span>';
+      var item = (typeof VOCAB_DB !== 'undefined' && VOCAB_DB[key]) ? VOCAB_DB[key] : null;
+      var label = displayWord || (item ? item.word : key);
+      return '<span class="vocab-mark" data-vkey="' + key + '" onclick="inspectVocab(\'' + key + '\')">' + label + '</span>';
     }
 
     function fixBadge(corrected, rawMistake) {
-      return '<span class=\"asr-fix-pill\" title=\"Note-taker misheard \\'' + corrected + '\\' as \\'' + rawMistake + '\\'\">⚡ Fixed: \"' + corrected + '\" <span class=\"text-stone-400 font-normal\">(heard: \"' + rawMistake + '\")</span></span>';
+      return '<span class="asr-fix-pill" title="Note-taker misheard \'' + corrected + '\' as \'' + rawMistake + '\'">⚡ Fixed: "' + corrected + '" <span class="text-stone-400 font-normal">(heard: "' + rawMistake + '")</span></span>';
     }
 
     const VOCAB_DB = {
@@ -1513,8 +1510,7 @@
     quote: "Louie (01:00:10): \"Next lesson on Sunday will be very fast—as we say in English, wham, bam, thank you, ma'am!\"",
     th: "ทำอย่างรวดเร็วฉับไว / เสร็จสิ้นในพริบตาเดียว"
   }
-};
-
+};;
     const ASR_FIXES = [
   {
     time: "00:29",
@@ -1644,8 +1640,7 @@
     misheard: "influencer",
     context: "Louie referencing Worachon's previous lesson note where the speech-to-text had humorously heard 'influencer'."
   }
-];
-
+];;
     const NATURAL_STRENGTHS = [
   {
     quote: "Our brain doesn't have its own pain receptor, meaning that the neurosurgeon can simply do a surgery on your brain while you are still awake.",
@@ -1683,8 +1678,7 @@
     turnId: "turn-119",
     praise: "Inspiring clarity of purpose and resolute professional ambition to communicate medical breakthroughs on the world stage."
   }
-];
-
+];;
     const PHRASING_POLISHES = [
   {
     spoken: "comparing to the years is been built",
@@ -1728,8 +1722,7 @@
     polished: "reach the pinnacle of my field / reach the very top of my specialty",
     why: "'Pinnacle of my field' or 'top of my specialty' captures the prestigious, international summit of medical achievement."
   }
-];
-
+];;
     const TRANSCRIPT_TURNS = [
   // CHAPTER I
   {
@@ -2150,8 +2143,7 @@
     time: "01:00:34",
     html: `Thank you, Louie! See you Sunday, bye-bye!`
   }
-];
-
+];;
     const EDITORIAL_TOPICS = [
   {
     tag: "Evolutionary Biology & Digital Culture",
@@ -2185,8 +2177,7 @@
     p1: "Louie shared his pivotal career transformation: moving from London's relentless 100-hour corporate grind to Munich, Germany, where statutory labor laws strictly capped work at 40 hours. Witnessing colleagues nurture vibrant family lives shattered the toxic illusion that perpetual exhaustion equates to merit.",
     p2: "Similarly, experiencing Thailand's relaxed warmth helped temper the rigid social hierarchies of Vietnam. Taking a step back provides the essential <strong>breathing space</strong> to calibrate priorities, foster emotional empathy, and build sustainable, high-performing careers."
   }
-];
-
+];;
     const FLASHCARDS = [
   {
     type: "British Spoken Idiom",
@@ -2284,8 +2275,7 @@
     back: "เกิดขึ้นอย่างฉับพลันตามธรรมชาติ / ไม่ได้วางแผนไว้ล่วงหน้า",
     origin: "Occurring by natural impulse without premeditated scheduling."
   }
-];
-
+];;
     const IDIOM_CHALLENGES = [
   {
     id: 1,
@@ -2329,8 +2319,7 @@
     correct: "top of one's field",
     explanation: "Reaching the <strong>'top of one's field'</strong> signifies reaching the preeminent pinnacle of your professional specialty."
   }
-];
-
+];;
     const QUIZ_QUESTIONS = [
   {
     id: 1,
@@ -2404,8 +2393,7 @@
     correctIndex: 1,
     explanation: "German statutory labor limits capped work at 40 hours, opening Louie's eyes to the sustainable power of work-life balance."
   }
-];
-
+];;
     const REFLECTION_PROMPTS = [
   {
     title: "The Rapid-Recall Mindset",
@@ -2419,31 +2407,25 @@
     title: "Communicating on the Global Stage",
     prompt: "Louie shared his goal of achieving high-level cultural fluency in Vietnamese business. What specific clinical or academic milestones will mark your ascent to the top of your specialty?"
   }
-];
+];;
+    // State Management
+    var activeTab = 'transcript';
+    var activeSpeakerFilter = 'all';
+    var activeVocabCategory = 'all';
+    var activeVocabLevel = 'all';
+    var currentFlashcardIndex = 0;
+    var isFlashcardFlipped = false;
+    var currentVoiceRate = 1.0;
+    var quizAnswers = {};
+    var idiomAnswers = {};
 
-    // -------------------------------------------------------------------------
-    // 2. STATE MANAGEMENT
-    // -------------------------------------------------------------------------
-    let activeTab = 'transcript';
-    let activeSpeakerFilter = 'all';
-    let activeVocabCategory = 'all';
-    let activeVocabLevel = 'all';
-    let currentFlashcardIndex = 0;
-    let isFlashcardFlipped = false;
-    let currentVoiceRate = 1.0;
-    let quizAnswers = {};
-    let idiomAnswers = {};
-
-    // -------------------------------------------------------------------------
-    // 3. TAB SWITCHING
-    // -------------------------------------------------------------------------
     function switchTab(tabId) {
       activeTab = tabId;
-      const tabs = ['transcript', 'vocab', 'fixes', 'editorials', 'practice'];
+      var tabs = ['transcript', 'vocab', 'fixes', 'editorials', 'practice'];
       
-      tabs.forEach(t => {
-        const panel = document.getElementById('tab-panel-' + t);
-        const btn = document.getElementById('tab-btn-' + t);
+      tabs.forEach(function(t) {
+        var panel = document.getElementById('tab-panel-' + t);
+        var btn = document.getElementById('tab-btn-' + t);
         if (panel) {
           panel.classList.toggle('hidden', t !== tabId);
         }
@@ -2459,42 +2441,39 @@
       window.scrollTo({ top: 400, behavior: 'smooth' });
     }
 
-    // -------------------------------------------------------------------------
-    // 4. SPOTLIGHT & TIPPY
-    // -------------------------------------------------------------------------
     function inspectVocab(key) {
-      const item = VOCAB_DB[key];
+      var item = VOCAB_DB[key];
       if (!item) return;
 
-      document.querySelectorAll('.vocab-mark').forEach(el => {
+      document.querySelectorAll('.vocab-mark').forEach(function(el) {
         el.classList.toggle('active-vocab', el.getAttribute('data-vkey') === key);
       });
 
-      const badge = document.getElementById('spotlight-badge');
+      var badge = document.getElementById('spotlight-badge');
       if (badge) {
         badge.textContent = item.level + ' • ' + (item.pos || 'term');
       }
 
-      const body = document.getElementById('spotlight-body');
+      var body = document.getElementById('spotlight-body');
       if (body) {
-        const cleanWord = (item.word || '').replace(/'/g, "\\'");
+        var cleanWord = (item.word || '').replace(/'/g, "\\'");
         body.innerHTML = 
-          '<div class=\"space-y-3\">' +
-            '<div class=\"flex items-baseline justify-between\">' +
-              '<h3 class=\"font-serif font-bold text-2xl text-slatewarm-900 leading-tight\">' + item.word + '</h3>' +
-              '<button onclick=\"speakWord(\\'' + cleanWord + '\\')\" class=\"p-1.5 text-stone-400 hover:text-autumn-600 transition\" title=\"Listen\">' +
-                '<i data-lucide=\"volume-2\" class=\"w-5 h-5\"></i>' +
+          '<div class="space-y-3">' +
+            '<div class="flex items-baseline justify-between">' +
+              '<h3 class="font-serif font-bold text-2xl text-slatewarm-900 leading-tight">' + item.word + '</h3>' +
+              '<button onclick="speakWord(\'' + cleanWord + '\')" class="p-1.5 text-stone-400 hover:text-autumn-600 transition" title="Listen">' +
+                '<i data-lucide="volume-2" class="w-5 h-5"></i>' +
               '</button>' +
             '</div>' +
-            '<div class=\"text-xs font-mono text-stone-500\">' + item.ipa + ' &bull; <span class=\"italic font-sans\">' + item.pos + '</span></div>' +
-            '<p class=\"text-xs sm:text-sm text-stone-700 font-sans leading-relaxed pt-1\">' + item.def + '</p>' +
-            (item.th ? '<div class=\"p-3 rounded-xl bg-gradient-to-r from-parchment-100 to-autumn-50/70 border border-autumn-200 text-xs font-medium text-slatewarm-900\">🇹🇭 <strong>ไทย:</strong> ' + item.th + '</div>' : '') +
-            (item.quote ? '<div class=\"pt-2 border-t border-parchment-200 text-[11px] text-stone-500 italic font-serif leading-relaxed\">“' + item.quote + '”</div>' : '') +
-            '<div class=\"flex items-center justify-between text-xs pt-2 text-stone-400 font-mono\">' +
+            '<div class="text-xs font-mono text-stone-500">' + item.ipa + ' &bull; <span class="italic font-sans">' + item.pos + '</span></div>' +
+            '<p class="text-xs sm:text-sm text-stone-700 font-sans leading-relaxed pt-1">' + item.def + '</p>' +
+            (item.th ? '<div class="p-3 rounded-xl bg-gradient-to-r from-parchment-100 to-autumn-50/70 border border-autumn-200 text-xs font-medium text-slatewarm-900">🇹🇭 <strong>ไทย:</strong> ' + item.th + '</div>' : '') +
+            (item.quote ? '<div class="pt-2 border-t border-parchment-200 text-[11px] text-stone-500 italic font-serif leading-relaxed">“' + item.quote + '”</div>' : '') +
+            '<div class="flex items-center justify-between text-xs pt-2 text-stone-400 font-mono">' +
               '<span>🕒 ' + (item.time || '--:--') + '</span>' +
-              '<button onclick=\"jumpToTranscriptTurn(\\'' + (item.turnId || '') + '\\', \\'' + key + '\\')\" class=\"text-autumn-700 hover:text-autumn-800 font-semibold flex items-center gap-1 transition\">' +
+              '<button onclick="jumpToTranscriptTurn(\'' + (item.turnId || '') + '\', \'' + key + '\')" class="text-autumn-700 hover:text-autumn-800 font-semibold flex items-center gap-1 transition">' +
                 '<span>View in turn</span>' +
-                '<i data-lucide=\"arrow-up-right\" class=\"w-3.5 h-3.5\"></i>' +
+                '<i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>' +
               '</button>' +
             '</div>' +
           '</div>';
@@ -2511,76 +2490,73 @@
         interactive: true,
         placement: 'top',
         delay: [120, 80],
-        content(reference) {
-          const key = reference.getAttribute('data-vkey');
-          const item = (typeof VOCAB_DB !== 'undefined' && VOCAB_DB[key]) ? VOCAB_DB[key] : null;
+        content: function(reference) {
+          var key = reference.getAttribute('data-vkey');
+          var item = (typeof VOCAB_DB !== 'undefined' && VOCAB_DB[key]) ? VOCAB_DB[key] : null;
           if (!item) return '';
-          return '<div class=\"p-2.5 space-y-1.5 text-left text-xs max-w-xs\">' +
-            '<div class=\"flex items-center justify-between gap-2 border-b border-parchment-200 pb-1\">' +
-              '<strong class=\"font-serif text-sm text-slatewarm-900\">' + item.word + '</strong>' +
-              '<span class=\"px-1.5 py-0.2 rounded text-[10px] font-mono font-bold bg-autumn-100 text-autumn-800\">' + item.level + '</span>' +
+          return '<div class="p-2.5 space-y-1.5 text-left text-xs max-w-xs">' +
+            '<div class="flex items-center justify-between gap-2 border-b border-parchment-200 pb-1">' +
+              '<strong class="font-serif text-sm text-slatewarm-900">' + item.word + '</strong>' +
+              '<span class="px-1.5 py-0.2 rounded text-[10px] font-mono font-bold bg-autumn-100 text-autumn-800">' + item.level + '</span>' +
             '</div>' +
-            '<div class=\"font-mono text-[10px] text-stone-500\">' + item.ipa + ' &bull; ' + item.pos + '</div>' +
-            '<p class=\"text-[11px] text-stone-700 leading-snug\">' + item.def + '</p>' +
-            (item.th ? '<div class=\"text-[11px] text-autumn-800 font-medium pt-1\">🇹🇭 ' + item.th + '</div>' : '') +
+            '<div class="font-mono text-[10px] text-stone-500">' + item.ipa + ' &bull; ' + item.pos + '</div>' +
+            '<p class="text-[11px] text-stone-700 leading-snug">' + item.def + '</p>' +
+            (item.th ? '<div class="text-[11px] text-autumn-800 font-medium pt-1">🇹🇭 ' + item.th + '</div>' : '') +
           '</div>';
         }
       });
     }
 
-    // -------------------------------------------------------------------------
-    // 5. RENDER TRANSCRIPT
-    // -------------------------------------------------------------------------
     function renderTranscript() {
-      const container = document.getElementById('transcript-turns-container');
+      var container = document.getElementById('transcript-turns-container');
       if (!container) return;
-      const search = (document.getElementById('transcript-search').value || '').toLowerCase().trim();
-      let html = '';
-      let currentChapter = '';
+      var search = (document.getElementById('transcript-search').value || '').toLowerCase().trim();
+      var html = '';
+      var currentChapter = '';
 
-      TRANSCRIPT_TURNS.forEach(turn => {
+      TRANSCRIPT_TURNS.forEach(function(turn) {
         if (activeSpeakerFilter !== 'all' && turn.speaker.toLowerCase() !== activeSpeakerFilter.toLowerCase()) {
           return;
         }
 
         if (search) {
-          const textToSearch = (turn.speaker + ' ' + turn.time + ' ' + turn.html.replace(/<[^>]*>/g, '')).toLowerCase();
+          var textToSearch = (turn.speaker + ' ' + turn.time + ' ' + turn.html.replace(/<[^>]*>/g, '')).toLowerCase();
           if (!textToSearch.includes(search)) return;
         }
 
         if (turn.chapter && turn.chapter !== currentChapter) {
           currentChapter = turn.chapter;
-          html += '<div class=\"py-3 px-4 rounded-2xl bg-parchment-200/60 border border-parchment-300 flex items-center justify-between text-xs font-serif font-bold text-slatewarm-900 mt-6 mb-2\">' +
-            '<span class=\"flex items-center gap-2\"><i data-lucide=\"bookmark\" class=\"w-4 h-4 text-autumn-600\"></i>' + currentChapter + '</span>' +
-            '<span class=\"font-mono text-[11px] text-stone-500 font-normal\">🕒 ' + turn.time + '</span>' +
+          html += '<div class="py-3 px-4 rounded-2xl bg-parchment-200/60 border border-parchment-300 flex items-center justify-between text-xs font-serif font-bold text-slatewarm-900 mt-6 mb-2">' +
+            '<span class="flex items-center gap-2"><i data-lucide="bookmark" class="w-4 h-4 text-autumn-600"></i>' + currentChapter + '</span>' +
+            '<span class="font-mono text-[11px] text-stone-500 font-normal">🕒 ' + turn.time + '</span>' +
           '</div>';
         }
 
-        const isLouie = turn.speaker.toLowerCase() === 'louie';
-        const borderStyle = isLouie ? 'border-l-4 border-l-sage-600 bg-sage-50/40' : 'border-l-4 border-l-autumn-500 bg-parchment-50/50';
-        const avatarBg = isLouie ? 'bg-sage-600 text-white' : 'bg-autumn-500 text-white';
-        const speakerLabel = isLouie ? 'Louie (Teacher)' : 'Student';
-        const cleanSpoken = turn.html.replace(/<[^>]*>/g, '').replace(/'/g, "\\'");
+        var isLouie = turn.speaker.toLowerCase() === 'louie';
+        var borderStyle = isLouie ? 'border-l-4 border-l-sage-600 bg-sage-50/40' : 'border-l-4 border-l-autumn-500 bg-parchment-50/50';
+        var avatarBg = isLouie ? 'bg-sage-600 text-white' : 'bg-autumn-500 text-white';
+        var speakerLabel = isLouie ? 'Louie (Teacher)' : 'Student';
+        var cleanSpoken = turn.html.replace(/<[^>]*>/g, '').replace(/'/g, "\\'");
 
-        html += '<div id=\"' + turn.id + '\" class=\"sanctuary-subcard rounded-2xl p-4 sm:p-5 ' + borderStyle + ' space-y-2.5 transition hover:shadow-sm\">' +
-          '<div class=\"flex items-center justify-between gap-2 border-b border-stone-200/60 pb-2\">' +
-            '<div class=\"flex items-center gap-2.5\">' +
-              '<div class=\"w-7 h-7 rounded-full ' + avatarBg + ' flex items-center justify-center font-bold text-xs\">' + turn.speaker.charAt(0) + '</div>' +
+        html += '<div id="' + turn.id + '" class="sanctuary-subcard rounded-2xl p-4 sm:p-5 ' + borderStyle + ' space-y-2.5 transition hover:shadow-sm">' +
+          '<div class="flex items-center justify-between gap-2 border-b border-stone-200/60 pb-2">' +
+            '<div class="flex items-center gap-2.5">' +
+              '<div class="w-7 h-7 rounded-full ' + avatarBg + ' flex items-center justify-center font-bold text-xs">' + turn.speaker.charAt(0) + '</div>' +
               '<div>' +
-                '<span class=\"font-bold text-xs sm:text-sm text-slatewarm-900\">' + speakerLabel + '</span>' +
-                '<span class=\"ml-2 font-mono text-[11px] text-stone-400\">🕒 ' + turn.time + '</span>' +
+                '<span class="font-bold text-xs sm:text-sm text-slatewarm-900">' + speakerLabel + '</span>' +
+                '<span class="ml-2 font-mono text-[11px] text-stone-400">🕒 ' + turn.time + '</span>' +
               '</div>' +
             '</div>' +
-            '<button onclick=\"speakText(\\'' + cleanSpoken + '\\', \\'en-GB\\')\" class=\"p-1.5 rounded-lg text-stone-400 hover:text-autumn-600 hover:bg-parchment-100 transition\" title=\"Listen to this turn\">' +
-              '<i data-lucide=\"volume-2\" class=\"w-4 h-4\"></i>' +
+            '<button onclick="speakText(\'' + cleanSpoken + '\', \'en-GB\')" class="p-1.5 rounded-lg text-stone-400 hover:text-autumn-600 hover:bg-parchment-100 transition" title="Listen to this turn">' +
+              '<i data-lucide="volume-2" class="w-4 h-4"></i>' +
             '</button>' +
           '</div>' +
-          '<div class=\"text-xs sm:text-sm text-slatewarm-900 leading-relaxed font-sans turn-body\">' + turn.html + '</div>' +
+          '<div class="text-xs sm:text-sm text-slatewarm-900 leading-relaxed font-sans turn-body">' + turn.html + '</div>' +
         '</div>';
       });
 
       if (!html) {
-        html = '<div class=\"text-center py-12 text-stone-500 font-serif text-base\">No turns match your search criteria.</div>';
+        html = '<div class="text-center py-12 text-stone-500 font-serif text-base">No turns match your search criteria.</div>';
       }
 
       container.innerHTML = html;
@@ -2589,7 +2565,7 @@
     }
 
     function filterTranscript() {
-      const val = document.getElementById('transcript-search').value;
+      var val = document.getElementById('transcript-search').value;
       document.getElementById('clear-search-btn').classList.toggle('hidden', !val);
       renderTranscript();
     }
@@ -2602,8 +2578,8 @@
 
     function filterSpeaker(speaker) {
       activeSpeakerFilter = speaker;
-      ['all', 'Louie', 'Worachon'].forEach(s => {
-        const btn = document.getElementById('spk-' + s.toLowerCase() + '-btn');
+      ['all', 'Louie', 'Worachon'].forEach(function(s) {
+        var btn = document.getElementById('spk-' + s.toLowerCase() + '-btn');
         if (btn) {
           if (s === speaker) {
             btn.className = 'px-3 py-1.5 rounded-xl text-xs font-semibold bg-sage-700 text-white shadow-xs transition';
@@ -2617,13 +2593,13 @@
 
     function toggleAsrBadges() {
       document.body.classList.toggle('hide-asr-fixes');
-      const hidden = document.body.classList.contains('hide-asr-fixes');
+      var hidden = document.body.classList.contains('hide-asr-fixes');
       document.getElementById('asr-btn-text').textContent = hidden ? 'Note-Taker Fixes: Hidden' : 'Note-Taker Fixes: Visible';
     }
 
     function toggleVocabHighlights() {
       document.body.classList.toggle('hide-vocab-highlights');
-      const hidden = document.body.classList.contains('hide-vocab-highlights');
+      var hidden = document.body.classList.contains('hide-vocab-highlights');
       document.getElementById('vocab-btn-text').textContent = hidden ? 'Vocab Highlights: Off' : 'Vocab Highlights: On';
     }
 
@@ -2631,28 +2607,25 @@
       switchTab('transcript');
       if (vocabKey) inspectVocab(vocabKey);
 
-      setTimeout(() => {
-        const el = document.getElementById(turnId);
+      setTimeout(function() {
+        var el = document.getElementById(turnId);
         if (el) {
           el.scrollIntoView({ behavior: 'smooth', block: 'center' });
           el.classList.add('turn-highlight-flash');
-          setTimeout(() => el.classList.remove('turn-highlight-flash'), 2900);
+          setTimeout(function() { el.classList.remove('turn-highlight-flash'); }, 2900);
         }
       }, 150);
     }
 
-    // -------------------------------------------------------------------------
-    // 6. RENDER VOCABULARY DICTIONARY
-    // -------------------------------------------------------------------------
     function renderVocabGrid() {
-      const container = document.getElementById('vocab-cards-grid');
+      var container = document.getElementById('vocab-cards-grid');
       if (!container) return;
-      const searchVal = (document.getElementById('vocab-search').value || '').toLowerCase().trim();
-      let html = '';
-      let count = 0;
+      var searchVal = (document.getElementById('vocab-search').value || '').toLowerCase().trim();
+      var html = '';
+      var count = 0;
 
-      Object.keys(VOCAB_DB).forEach(key => {
-        const item = VOCAB_DB[key];
+      Object.keys(VOCAB_DB).forEach(function(key) {
+        var item = VOCAB_DB[key];
         if (!item) return;
 
         if (activeVocabCategory !== 'all') {
@@ -2667,59 +2640,59 @@
         }
 
         if (searchVal) {
-          const combined = ((item.word || '') + ' ' + (item.def || '') + ' ' + (item.th || '') + ' ' + (item.cat || '') + ' ' + (item.quote || '')).toLowerCase();
+          var combined = ((item.word || '') + ' ' + (item.def || '') + ' ' + (item.th || '') + ' ' + (item.cat || '') + ' ' + (item.quote || '')).toLowerCase();
           if (!combined.includes(searchVal)) return;
         }
 
         count++;
-        const cleanWord = (item.word || '').replace(/'/g, "\\'");
+        var cleanWord = (item.word || '').replace(/'/g, "\\'");
 
-        html += '<div class=\"sanctuary-subcard rounded-2xl p-5 space-y-3.5 transition hover:shadow-md flex flex-col justify-between border-t-2 border-t-autumn-400\">' +
-          '<div class=\"space-y-2\">' +
-            '<div class=\"flex items-center justify-between gap-2\">' +
-              '<span class=\"px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-autumn-100 text-autumn-800\">' + item.level + '</span>' +
-              '<span class=\"px-2 py-0.5 rounded text-[10px] font-mono text-stone-500 capitalize bg-stone-100\">' + item.cat + '</span>' +
+        html += '<div class="sanctuary-subcard rounded-2xl p-5 space-y-3.5 transition hover:shadow-md flex flex-col justify-between border-t-2 border-t-autumn-400">' +
+          '<div class="space-y-2">' +
+            '<div class="flex items-center justify-between gap-2">' +
+              '<span class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-autumn-100 text-autumn-800">' + item.level + '</span>' +
+              '<span class="px-2 py-0.5 rounded text-[10px] font-mono text-stone-500 capitalize bg-stone-100">' + item.cat + '</span>' +
             '</div>' +
             '<div>' +
-              '<div class=\"flex items-baseline justify-between\">' +
-                '<h3 class=\"font-serif font-bold text-xl text-slatewarm-900 leading-tight\">' + item.word + '</h3>' +
-                '<button onclick=\"speakWord(\\'' + cleanWord + '\\')\" class=\"p-1 text-stone-400 hover:text-autumn-600 transition\" title=\"Listen\">' +
-                  '<i data-lucide=\"volume-2\" class=\"w-4 h-4\"></i>' +
+              '<div class="flex items-baseline justify-between">' +
+                '<h3 class="font-serif font-bold text-xl text-slatewarm-900 leading-tight">' + item.word + '</h3>' +
+                '<button onclick="speakWord(\'' + cleanWord + '\')" class="p-1 text-stone-400 hover:text-autumn-600 transition" title="Listen">' +
+                  '<i data-lucide="volume-2" class="w-4 h-4"></i>' +
                 '</button>' +
               '</div>' +
-              '<div class=\"text-[11px] font-mono text-stone-500\">' + item.ipa + ' &bull; <span class=\"italic font-sans\">' + item.pos + '</span></div>' +
+              '<div class="text-[11px] font-mono text-stone-500">' + item.ipa + ' &bull; <span class="italic font-sans">' + item.pos + '</span></div>' +
             '</div>' +
-            '<p class=\"text-xs text-stone-700 font-sans leading-relaxed\">' + item.def + '</p>' +
-            (item.th ? '<div class=\"p-2.5 rounded-xl bg-gradient-to-r from-parchment-100 to-autumn-50/50 border border-autumn-200/70 text-xs font-medium text-slatewarm-900\">🇹🇭 <strong>ไทย:</strong> ' + item.th + '</div>' : '') +
-            (item.quote ? '<blockquote class=\"border-l-2 border-stone-300 pl-2.5 text-[11px] italic text-stone-500 leading-relaxed font-serif\">“' + item.quote + '”</blockquote>' : '') +
+            '<p class="text-xs text-stone-700 font-sans leading-relaxed">' + item.def + '</p>' +
+            (item.th ? '<div class="p-2.5 rounded-xl bg-gradient-to-r from-parchment-100 to-autumn-50/50 border border-autumn-200/70 text-xs font-medium text-slatewarm-900">🇹🇭 <strong>ไทย:</strong> ' + item.th + '</div>' : '') +
+            (item.quote ? '<blockquote class="border-l-2 border-stone-300 pl-2.5 text-[11px] italic text-stone-500 leading-relaxed font-serif">“' + item.quote + '”</blockquote>' : '') +
           '</div>' +
-          '<div class=\"pt-3 border-t border-stone-100 flex items-center justify-between text-xs\">' +
-            '<span class=\"text-stone-400 font-mono text-[11px]\">🕒 ' + (item.time || '--:--') + '</span>' +
-            '<button onclick=\"jumpToTranscriptTurn(\\'' + (item.turnId || '') + '\\', \\'' + key + '\\')\" class=\"text-autumn-700 hover:text-autumn-800 font-semibold flex items-center gap-1 transition\">' +
+          '<div class="pt-3 border-t border-stone-100 flex items-center justify-between text-xs">' +
+            '<span class="text-stone-400 font-mono text-[11px]">🕒 ' + (item.time || '--:--') + '</span>' +
+            '<button onclick="jumpToTranscriptTurn(\'' + (item.turnId || '') + '\', \'' + key + '\')" class="text-autumn-700 hover:text-autumn-800 font-semibold flex items-center gap-1 transition">' +
               '<span>View in turn</span>' +
-              '<i data-lucide=\"arrow-up-right\" class=\"w-3.5 h-3.5\"></i>' +
+              '<i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>' +
             '</button>' +
           '</div>' +
         '</div>';
       });
 
       if (!html) {
-        html = '<div class=\"col-span-full text-center py-12 sanctuary-card rounded-3xl p-6 text-stone-500 space-y-2\">' +
-          '<i data-lucide=\"book-x\" class=\"w-8 h-8 mx-auto text-stone-400\"></i>' +
-          '<p class=\"font-serif text-base\">No vocabulary items matched your filter.</p>' +
+        html = '<div class="col-span-full text-center py-12 sanctuary-card rounded-3xl p-6 text-stone-500 space-y-2">' +
+          '<i data-lucide="book-x" class="w-8 h-8 mx-auto text-stone-400"></i>' +
+          '<p class="font-serif text-base">No vocabulary items matched your filter.</p>' +
         '</div>';
       }
 
       container.innerHTML = html;
-      const countEl = document.getElementById('vocab-total-badge');
+      var countEl = document.getElementById('vocab-total-badge');
       if (countEl) countEl.textContent = count + ' Words';
       if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
     }
 
     function filterVocabCategory(cat) {
       activeVocabCategory = cat;
-      ['all', 'idioms', 'medical', 'science', 'lifestyle'].forEach(c => {
-        const btn = document.getElementById('cat-' + c);
+      ['all', 'idioms', 'medical', 'science', 'lifestyle'].forEach(function(c) {
+        var btn = document.getElementById('cat-' + c);
         if (btn) {
           if (c === cat) {
             btn.className = 'px-3 py-1.5 rounded-xl text-xs font-semibold bg-sage-700 text-white shadow-xs transition';
@@ -2733,8 +2706,8 @@
 
     function filterVocabLevel(lvl) {
       activeVocabLevel = lvl;
-      ['all', 'B2', 'C1', 'C2'].forEach(l => {
-        const btn = document.getElementById('lvl-' + l);
+      ['all', 'B2', 'C1', 'C2'].forEach(function(l) {
+        var btn = document.getElementById('lvl-' + l);
         if (btn) {
           if (l === lvl) {
             btn.className = 'px-2.5 py-1 rounded-lg bg-autumn-600 text-white font-bold transition text-xs';
@@ -2746,96 +2719,90 @@
       renderVocabGrid();
     }
 
-    // -------------------------------------------------------------------------
-    // 7. RENDER TAB 3 (Strengths, Phrasing, ASR Fixes) & TAB 4 (Editorials)
-    // -------------------------------------------------------------------------
     function renderStrengths() {
-      const container = document.getElementById('strengths-container');
+      var container = document.getElementById('strengths-container');
       if (!container) return;
-      container.innerHTML = NATURAL_STRENGTHS.map((item, idx) => 
-        '<div class=\"sanctuary-subcard p-5 rounded-2xl border-l-4 border-l-sage-500 space-y-2\">' +
-          '<div class=\"flex items-center justify-between text-xs\">' +
-            '<span class=\"font-mono text-sage-800 font-bold\">' + (idx + 1) + '. Natural Strength</span>' +
-            '<span class=\"font-mono text-stone-400\">🕒 ' + item.time + '</span>' +
+      container.innerHTML = NATURAL_STRENGTHS.map(function(item, idx) {
+        return '<div class="sanctuary-subcard p-5 rounded-2xl border-l-4 border-l-sage-500 space-y-2">' +
+          '<div class="flex items-center justify-between text-xs">' +
+            '<span class="font-mono text-sage-800 font-bold">' + (idx + 1) + '. Natural Strength</span>' +
+            '<span class="font-mono text-stone-400">🕒 ' + item.time + '</span>' +
           '</div>' +
-          '<p class=\"font-serif italic text-sm text-stone-800\">\"' + item.quote + '\"</p>' +
-          '<p class=\"text-xs text-stone-600\"><strong>Why this stood out:</strong> ' + item.praise + '</p>' +
-        '</div>'
-      ).join('');
+          '<p class="font-serif italic text-sm text-stone-800">"' + item.quote + '"</p>' +
+          '<p class="text-xs text-stone-600"><strong>Why this stood out:</strong> ' + item.praise + '</p>' +
+        '</div>';
+      }).join('');
     }
 
     function renderPhrasing() {
-      const container = document.getElementById('phrasing-container');
+      var container = document.getElementById('phrasing-container');
       if (!container) return;
-      container.innerHTML = PHRASING_POLISHES.map(item => 
-        '<div class=\"sanctuary-subcard p-5 rounded-2xl space-y-2\">' +
-          '<div class=\"flex items-center justify-between text-xs\">' +
-            '<span class=\"px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 font-mono font-bold\">Gentle Polish</span>' +
-            '<span class=\"text-stone-400 font-mono\">🕒 ' + item.time + '</span>' +
+      container.innerHTML = PHRASING_POLISHES.map(function(item) {
+        return '<div class="sanctuary-subcard p-5 rounded-2xl space-y-2">' +
+          '<div class="flex items-center justify-between text-xs">' +
+            '<span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 font-mono font-bold">Gentle Polish</span>' +
+            '<span class="text-stone-400 font-mono">🕒 ' + item.time + '</span>' +
           '</div>' +
-          '<div class=\"grid grid-cols-1 md:grid-cols-2 gap-3 text-xs sm:text-sm\">' +
-            '<div class=\"bg-stone-50 p-3 rounded-xl border border-stone-200\">' +
-              '<span class=\"text-[10px] uppercase font-mono font-bold text-stone-400 block mb-1\">In The Moment Spoken</span>' +
-              '<p class=\"text-stone-700 italic\">\"' + item.spoken + '\"</p>' +
+          '<div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs sm:text-sm">' +
+            '<div class="bg-stone-50 p-3 rounded-xl border border-stone-200">' +
+              '<span class="text-[10px] uppercase font-mono font-bold text-stone-400 block mb-1">In The Moment Spoken</span>' +
+              '<p class="text-stone-700 italic">"' + item.spoken + '"</p>' +
             '</div>' +
-            '<div class=\"bg-sage-50 p-3 rounded-xl border border-sage-200\">' +
-              '<span class=\"text-[10px] uppercase font-mono font-bold text-sage-700 block mb-1\">Gentle Native Polish</span>' +
-              '<p class=\"text-sage-900 font-semibold\">\"' + item.polished + '\"</p>' +
+            '<div class="bg-sage-50 p-3 rounded-xl border border-sage-200">' +
+              '<span class="text-[10px] uppercase font-mono font-bold text-sage-700 block mb-1">Gentle Native Polish</span>' +
+              '<p class="text-sage-900 font-semibold">"' + item.polished + '"</p>' +
             '</div>' +
           '</div>' +
-          '<p class=\"text-xs text-stone-500\"><em>Why:</em> ' + item.why + '</p>' +
-        '</div>'
-      ).join('');
+          '<p class="text-xs text-stone-500"><em>Why:</em> ' + item.why + '</p>' +
+        '</div>';
+      }).join('');
     }
 
     function renderAsrFixes() {
-      const tbody = document.getElementById('asr-fixes-tbody');
+      var tbody = document.getElementById('asr-fixes-tbody');
       if (!tbody) return;
-      tbody.innerHTML = ASR_FIXES.map(fix => 
-        '<tr>' +
-          '<td class=\"py-2.5 px-3 font-mono text-autumn-700\">🕒 ' + fix.time + '</td>' +
-          '<td class=\"py-2.5 px-3 font-mono text-red-600 line-through\">\"' + fix.misheard + '\"</td>' +
-          '<td class=\"py-2.5 px-3 font-bold text-sage-900\">' + fix.corrected + '</td>' +
-          '<td class=\"py-2.5 px-3 text-stone-600\">' + fix.context + '</td>' +
-        '</tr>'
-      ).join('');
+      tbody.innerHTML = ASR_FIXES.map(function(fix) {
+        return '<tr>' +
+          '<td class="py-2.5 px-3 font-mono text-autumn-700">🕒 ' + fix.time + '</td>' +
+          '<td class="py-2.5 px-3 font-mono text-red-600 line-through">"' + fix.misheard + '"</td>' +
+          '<td class="py-2.5 px-3 font-bold text-sage-900">' + fix.corrected + '</td>' +
+          '<td class="py-2.5 px-3 text-stone-600">' + fix.context + '</td>' +
+        '</tr>';
+      }).join('');
     }
 
     function renderEditorialTopics() {
-      const container = document.getElementById('editorial-grid');
+      var container = document.getElementById('editorial-grid');
       if (!container) return;
-      container.innerHTML = EDITORIAL_TOPICS.map(item => 
-        '<article class=\"sanctuary-card rounded-3xl p-6 sm:p-7 space-y-3.5 transition hover:shadow-md border-t-4 ' + item.border + '\">' +
-          '<div class=\"flex items-center justify-between text-xs\">' +
-            '<span class=\"px-2.5 py-0.5 rounded-full bg-parchment-200 text-stone-700 font-mono font-bold text-[11px]\">' + item.tag + '</span>' +
-            '<span class=\"font-mono text-stone-400\">🕒 ' + item.time + '</span>' +
+      container.innerHTML = EDITORIAL_TOPICS.map(function(item) {
+        return '<article class="sanctuary-card rounded-3xl p-6 sm:p-7 space-y-3.5 transition hover:shadow-md border-t-4 ' + item.border + '">' +
+          '<div class="flex items-center justify-between text-xs">' +
+            '<span class="px-2.5 py-0.5 rounded-full bg-parchment-200 text-stone-700 font-mono font-bold text-[11px]">' + item.tag + '</span>' +
+            '<span class="font-mono text-stone-400">🕒 ' + item.time + '</span>' +
           '</div>' +
-          '<h3 class=\"font-serif font-bold text-xl sm:text-2xl text-slatewarm-900 leading-snug\">' + item.title + '</h3>' +
-          '<div class=\"text-xs sm:text-sm text-stone-700 font-sans leading-relaxed space-y-2.5\">' +
+          '<h3 class="font-serif font-bold text-xl sm:text-2xl text-slatewarm-900 leading-snug">' + item.title + '</h3>' +
+          '<div class="text-xs sm:text-sm text-stone-700 font-sans leading-relaxed space-y-2.5">' +
             '<p>' + item.p1 + '</p>' +
             '<p>' + item.p2 + '</p>' +
           '</div>' +
-        '</article>'
-      ).join('');
+        '</article>';
+      }).join('');
     }
 
     function renderReflections() {
-      const container = document.getElementById('reflections-container');
+      var container = document.getElementById('reflections-container');
       if (!container) return;
-      container.innerHTML = REFLECTION_PROMPTS.map((p, idx) => 
-        '<div class=\"sanctuary-subcard p-5 rounded-2xl space-y-2\">' +
-          '<span class=\"text-[10px] uppercase font-mono font-bold text-autumn-700\">Prompt ' + (idx + 1) + '</span>' +
-          '<h4 class=\"font-serif font-bold text-base text-slatewarm-900\">' + p.title + '</h4>' +
-          '<p class=\"text-xs text-stone-600 leading-relaxed\">' + p.prompt + '</p>' +
-        '</div>'
-      ).join('');
+      container.innerHTML = REFLECTION_PROMPTS.map(function(p, idx) {
+        return '<div class="sanctuary-subcard p-5 rounded-2xl space-y-2">' +
+          '<span class="text-[10px] uppercase font-mono font-bold text-autumn-700">Prompt ' + (idx + 1) + '</span>' +
+          '<h4 class="font-serif font-bold text-base text-slatewarm-900">' + p.title + '</h4>' +
+          '<p class="text-xs text-stone-600 leading-relaxed">' + p.prompt + '</p>' +
+        '</div>';
+      }).join('');
     }
 
-    // -------------------------------------------------------------------------
-    // 8. FLASHCARDS, IDIOM GYM & QUIZ
-    // -------------------------------------------------------------------------
     function updateFlashcardUI() {
-      const fc = FLASHCARDS[currentFlashcardIndex];
+      var fc = FLASHCARDS[currentFlashcardIndex];
       if (!fc) return;
 
       document.getElementById('flashcard-counter').textContent = (currentFlashcardIndex + 1) + ' / ' + FLASHCARDS.length;
@@ -2848,7 +2815,7 @@
       document.getElementById('fc-back-th').textContent = fc.back;
       document.getElementById('fc-back-origin').textContent = fc.origin;
 
-      const inner = document.getElementById('flashcard-card-inner');
+      var inner = document.getElementById('flashcard-card-inner');
       if (inner) {
         if (isFlashcardFlipped) {
           inner.classList.add('flipped');
@@ -2860,7 +2827,7 @@
 
     function flipFlashcard() {
       isFlashcardFlipped = !isFlashcardFlipped;
-      const inner = document.getElementById('flashcard-card-inner');
+      var inner = document.getElementById('flashcard-card-inner');
       if (inner) inner.classList.toggle('flipped', isFlashcardFlipped);
     }
 
@@ -2877,45 +2844,47 @@
     }
 
     function speakCurrentFlashcard() {
-      const fc = FLASHCARDS[currentFlashcardIndex];
+      var fc = FLASHCARDS[currentFlashcardIndex];
       if (fc) speakText(fc.front, 'en-GB');
     }
 
-    // Idiom Gym Scenario Matcher
     function renderIdiomGym() {
-      const container = document.getElementById('idiom-gym-container');
+      var container = document.getElementById('idiom-gym-container');
       if (!container) return;
 
-      container.innerHTML = IDIOM_CHALLENGES.map(ch => 
-        '<div class=\"sanctuary-subcard p-5 rounded-2xl space-y-3\">' +
-          '<div class=\"flex items-center gap-2 text-xs font-mono text-autumn-700 font-bold\">' +
-            '<i data-lucide=\"target\" class=\"w-4 h-4\"></i>' +
+      container.innerHTML = IDIOM_CHALLENGES.map(function(ch) {
+        var optionsHtml = ch.options.map(function(opt) {
+          var cleanOpt = opt.replace(/'/g, "\\'");
+          var safeId = opt.replace(/[^a-zA-Z0-9]/g, '');
+          return '<button onclick="selectIdiomOption(' + ch.id + ', \'' + cleanOpt + '\')" id="idiom-btn-' + ch.id + '-' + safeId + '" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-white border border-stone-200 text-stone-700 hover:bg-parchment-100 transition">' +
+            opt +
+          '</button>';
+        }).join('');
+
+        return '<div class="sanctuary-subcard p-5 rounded-2xl space-y-3">' +
+          '<div class="flex items-center gap-2 text-xs font-mono text-autumn-700 font-bold">' +
+            '<i data-lucide="target" class="w-4 h-4"></i>' +
             '<span>Challenge ' + ch.id + '</span>' +
           '</div>' +
-          '<p class=\"text-xs sm:text-sm text-slatewarm-900 leading-relaxed font-medium\">' + ch.scenario + '</p>' +
-          '<div class=\"flex flex-wrap gap-2 pt-1\">' +
-            ch.options.map(opt => 
-              '<button onclick=\"selectIdiomOption(' + ch.id + ', \\'' + opt.replace(/'/g, "\\'") + '\\')\" id=\"idiom-btn-' + ch.id + '-' + opt.replace(/[^a-zA-Z0-9]/g, '') + '\" class=\"px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-white border border-stone-200 text-stone-700 hover:bg-parchment-100 transition\">' +
-                opt +
-              '</button>'
-            ).join('') +
-          '</div>' +
-          '<div id=\"idiom-fb-' + ch.id + '\" class=\"hidden p-3 rounded-xl text-xs mt-2\"></div>' +
-        '</div>'
-      ).join('');
+          '<p class="text-xs sm:text-sm text-slatewarm-900 leading-relaxed font-medium">' + ch.scenario + '</p>' +
+          '<div class="flex flex-wrap gap-2 pt-1">' + optionsHtml + '</div>' +
+          '<div id="idiom-fb-' + ch.id + '" class="hidden p-3 rounded-xl text-xs mt-2"></div>' +
+        '</div>';
+      }).join('');
     }
 
     function selectIdiomOption(chId, chosen) {
-      const ch = IDIOM_CHALLENGES.find(c => c.id === chId);
+      var ch = IDIOM_CHALLENGES.find(function(c) { return c.id === chId; });
       if (!ch) return;
       idiomAnswers[chId] = chosen;
 
-      const fb = document.getElementById('idiom-fb-' + chId);
+      var fb = document.getElementById('idiom-fb-' + chId);
       if (!fb) return;
       fb.classList.remove('hidden');
 
-      ch.options.forEach(opt => {
-        const btn = document.getElementById('idiom-btn-' + chId + '-' + opt.replace(/[^a-zA-Z0-9]/g, ''));
+      ch.options.forEach(function(opt) {
+        var safeId = opt.replace(/[^a-zA-Z0-9]/g, '');
+        var btn = document.getElementById('idiom-btn-' + chId + '-' + safeId);
         if (btn) {
           if (opt === ch.correct) {
             btn.className = 'px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-sage-700 text-white shadow-xs';
@@ -2937,42 +2906,41 @@
       }
     }
 
-    // 6-Question Quiz
     function renderQuiz() {
-      const container = document.getElementById('quiz-questions-container');
+      var container = document.getElementById('quiz-questions-container');
       if (!container) return;
 
-      container.innerHTML = QUIZ_QUESTIONS.map(q => 
-        '<div class=\"sanctuary-subcard p-5 rounded-2xl space-y-3\">' +
-          '<div class=\"flex items-center gap-2 text-xs font-mono text-sage-800 font-bold\">' +
-            '<i data-lucide=\"help-circle\" class=\"w-4 h-4 text-sage-600\"></i>' +
+      container.innerHTML = QUIZ_QUESTIONS.map(function(q) {
+        var optionsHtml = q.options.map(function(opt, oIdx) {
+          return '<button onclick="selectQuizAnswer(' + q.id + ', ' + oIdx + ')" id="quiz-btn-' + q.id + '-' + oIdx + '" class="w-full text-left p-3 rounded-xl text-xs sm:text-sm font-medium bg-white border border-stone-200 hover:bg-parchment-100 transition flex items-start gap-2.5">' +
+            '<span class="w-5 h-5 rounded-full bg-parchment-200 text-stone-700 flex items-center justify-center font-mono text-[10px] shrink-0 font-bold">' + String.fromCharCode(65 + oIdx) + '</span>' +
+            '<span>' + opt + '</span>' +
+          '</button>';
+        }).join('');
+
+        return '<div class="sanctuary-subcard p-5 rounded-2xl space-y-3">' +
+          '<div class="flex items-center gap-2 text-xs font-mono text-sage-800 font-bold">' +
+            '<i data-lucide="help-circle" class="w-4 h-4 text-sage-600"></i>' +
             '<span>Question ' + q.id + ' of ' + QUIZ_QUESTIONS.length + '</span>' +
           '</div>' +
-          '<h3 class=\"font-serif font-bold text-base sm:text-lg text-slatewarm-900\">' + q.question + '</h3>' +
-          '<div class=\"space-y-2 pt-1\">' +
-            q.options.map((opt, oIdx) => 
-              '<button onclick=\"selectQuizAnswer(' + q.id + ', ' + oIdx + ')\" id=\"quiz-btn-' + q.id + '-' + oIdx + '\" class=\"w-full text-left p-3 rounded-xl text-xs sm:text-sm font-medium bg-white border border-stone-200 hover:bg-parchment-100 transition flex items-start gap-2.5\">' +
-                '<span class=\"w-5 h-5 rounded-full bg-parchment-200 text-stone-700 flex items-center justify-center font-mono text-[10px] shrink-0 font-bold\">' + String.fromCharCode(65 + oIdx) + '</span>' +
-                '<span>' + opt + '</span>' +
-              '</button>'
-            ).join('') +
-          '</div>' +
-          '<div id=\"quiz-fb-' + q.id + '\" class=\"hidden p-3.5 rounded-xl text-xs mt-2 leading-relaxed\"></div>' +
-        '</div>'
-      ).join('');
+          '<h3 class="font-serif font-bold text-base sm:text-lg text-slatewarm-900">' + q.question + '</h3>' +
+          '<div class="space-y-2 pt-1">' + optionsHtml + '</div>' +
+          '<div id="quiz-fb-' + q.id + '" class="hidden p-3.5 rounded-xl text-xs mt-2 leading-relaxed"></div>' +
+        '</div>';
+      }).join('');
     }
 
     function selectQuizAnswer(qId, choiceIdx) {
-      const q = QUIZ_QUESTIONS.find(item => item.id === qId);
+      var q = QUIZ_QUESTIONS.find(function(item) { return item.id === qId; });
       if (!q) return;
       quizAnswers[qId] = choiceIdx;
 
-      const fb = document.getElementById('quiz-fb-' + qId);
+      var fb = document.getElementById('quiz-fb-' + qId);
       if (!fb) return;
       fb.classList.remove('hidden');
 
-      q.options.forEach((opt, idx) => {
-        const btn = document.getElementById('quiz-btn-' + qId + '-' + idx);
+      q.options.forEach(function(opt, idx) {
+        var btn = document.getElementById('quiz-btn-' + qId + '-' + idx);
         if (btn) {
           if (idx === q.correctIndex) {
             btn.className = 'w-full text-left p-3 rounded-xl text-xs sm:text-sm font-semibold bg-sage-700 text-white shadow-xs flex items-start gap-2.5';
@@ -2992,9 +2960,8 @@
         fb.innerHTML = '<strong>💡 Solution:</strong> ' + q.explanation;
       }
 
-      // Update score badge
-      let score = 0;
-      QUIZ_QUESTIONS.forEach(item => {
+      var score = 0;
+      QUIZ_QUESTIONS.forEach(function(item) {
         if (quizAnswers[item.id] === item.correctIndex) score++;
       });
       document.getElementById('quiz-score-badge').textContent = 'Score: ' + score + ' / ' + QUIZ_QUESTIONS.length;
@@ -3004,18 +2971,15 @@
       }
     }
 
-    // -------------------------------------------------------------------------
-    // 9. WEB SPEECH API PRONUNCIATION
-    // -------------------------------------------------------------------------
-    function speakText(text, lang = 'en-GB') {
+    function speakText(text, lang) {
       if (!('speechSynthesis' in window)) return;
       window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = lang;
+      var utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = lang || 'en-GB';
       utterance.rate = currentVoiceRate;
       
-      const voices = window.speechSynthesis.getVoices();
-      const british = voices.find(v => v.lang.includes('en-GB') || v.name.includes('UK') || v.name.includes('British'));
+      var voices = window.speechSynthesis.getVoices();
+      var british = voices.find(function(v) { return v.lang.includes('en-GB') || v.name.includes('UK') || v.name.includes('British'); });
       if (british) utterance.voice = british;
 
       window.speechSynthesis.speak(utterance);
@@ -3027,8 +2991,8 @@
 
     function setVoiceRate(rate) {
       currentVoiceRate = rate;
-      const slowBtn = document.getElementById('rate-slow');
-      const normBtn = document.getElementById('rate-normal');
+      var slowBtn = document.getElementById('rate-slow');
+      var normBtn = document.getElementById('rate-normal');
       if (rate === 0.85) {
         slowBtn.className = 'px-1.5 py-0.5 rounded-md text-[11px] bg-sage-600 text-white font-semibold transition';
         normBtn.className = 'px-1.5 py-0.5 rounded-md text-[11px] text-stone-600 hover:bg-parchment-100 transition';
@@ -3038,29 +3002,27 @@
       }
     }
 
-    // -------------------------------------------------------------------------
-    // 10. PROCEDURAL WEB AUDIO API SOUNDSCAPE
-    // -------------------------------------------------------------------------
-    let audioCtx = null;
-    let soundscapeNode = null;
-    let soundscapeGain = null;
-    let isSoundscapePlaying = false;
-    let currentSoundscapePreset = 'breeze';
+    // Soundscape
+    var audioCtx = null;
+    var soundscapeNode = null;
+    var soundscapeGain = null;
+    var isSoundscapePlaying = false;
+    var currentSoundscapePreset = 'breeze';
 
     function initAudioContext() {
       if (!audioCtx) {
-        const AudioContext = window.AudioContext || window.webkitAudioContext;
-        audioCtx = new AudioContext();
+        var AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        audioCtx = new AudioContextClass();
       }
     }
 
     function createPinkNoise() {
-      const bufferSize = audioCtx.sampleRate * 2;
-      const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-      const data = buffer.getChannelData(0);
-      let b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0;
-      for (let i = 0; i < bufferSize; i++) {
-        const white = Math.random() * 2 - 1;
+      var bufferSize = audioCtx.sampleRate * 2;
+      var buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+      var data = buffer.getChannelData(0);
+      var b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0;
+      for (var i = 0; i < bufferSize; i++) {
+        var white = Math.random() * 2 - 1;
         b0 = 0.99886 * b0 + white * 0.0555179;
         b1 = 0.99332 * b1 + white * 0.0750759;
         b2 = 0.96900 * b2 + white * 0.1538520;
@@ -3088,12 +3050,12 @@
 
     function startSoundscape() {
       stopSoundscape();
-      const buffer = createPinkNoise();
-      const noise = audioCtx.createBufferSource();
+      var buffer = createPinkNoise();
+      var noise = audioCtx.createBufferSource();
       noise.buffer = buffer;
       noise.loop = true;
 
-      const filter = audioCtx.createBiquadFilter();
+      var filter = audioCtx.createBiquadFilter();
       if (currentSoundscapePreset === 'rain') {
         filter.type = 'lowpass';
         filter.frequency.setValueAtTime(800, audioCtx.currentTime);
@@ -3104,9 +3066,8 @@
       } else {
         filter.type = 'lowpass';
         filter.frequency.setValueAtTime(400, audioCtx.currentTime);
-        // LFO wind swell
-        const lfo = audioCtx.createOscillator();
-        const lfoGain = audioCtx.createGain();
+        var lfo = audioCtx.createOscillator();
+        var lfoGain = audioCtx.createGain();
         lfo.frequency.setValueAtTime(0.12, audioCtx.currentTime);
         lfoGain.gain.setValueAtTime(250, audioCtx.currentTime);
         lfo.connect(lfoGain);
@@ -3114,8 +3075,8 @@
         lfo.start();
       }
 
-      const gain = audioCtx.createGain();
-      const vol = parseFloat(document.getElementById('soundscape-volume').value || 0.22);
+      var gain = audioCtx.createGain();
+      var vol = parseFloat(document.getElementById('soundscape-volume').value || 0.22);
       gain.gain.setValueAtTime(vol, audioCtx.currentTime);
 
       noise.connect(filter);
@@ -3137,9 +3098,9 @@
         soundscapeNode = null;
       }
       isSoundscapePlaying = false;
-      const label = document.getElementById('soundscape-label');
+      var label = document.getElementById('soundscape-label');
       if (label) label.textContent = 'London Breeze: Off';
-      const btn = document.getElementById('soundscape-btn');
+      var btn = document.getElementById('soundscape-btn');
       if (btn) btn.classList.remove('bg-sage-100');
     }
 
@@ -3154,12 +3115,10 @@
       }
     }
 
-    // -------------------------------------------------------------------------
-    // 11. HTML5 CANVAS FALLING LEAVES
-    // -------------------------------------------------------------------------
-    let leafMode = 'gentle'; // 'gentle', 'breeze', 'off'
-    let canvas, ctx, animFrameId;
-    let leaves = [];
+    // Leaf Animation
+    var leafMode = 'gentle';
+    var canvas, ctx, animFrameId;
+    var leaves = [];
 
     function initLeafCanvas() {
       canvas = document.getElementById('autumn-breeze-canvas');
@@ -3179,8 +3138,8 @@
 
     function createLeaves(count) {
       leaves = [];
-      const colors = ['#be6f38', '#d38c57', '#eed0b5', '#5b826f', '#cbb38e'];
-      for (let i = 0; i < count; i++) {
+      var colors = ['#be6f38', '#d38c57', '#eed0b5', '#5b826f', '#cbb38e'];
+      for (var i = 0; i < count; i++) {
         leaves.push({
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
@@ -3200,14 +3159,13 @@
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       if (leafMode !== 'off') {
-        leaves.forEach(leaf => {
+        leaves.forEach(function(leaf) {
           ctx.save();
           ctx.translate(leaf.x, leaf.y);
           ctx.rotate((leaf.rot * Math.PI) / 180);
           ctx.fillStyle = leaf.color;
           ctx.globalAlpha = leaf.alpha;
           
-          // Draw leaf shape
           ctx.beginPath();
           ctx.moveTo(0, -leaf.size);
           ctx.quadraticCurveTo(leaf.size * 0.8, 0, 0, leaf.size);
@@ -3215,7 +3173,7 @@
           ctx.fill();
           ctx.restore();
 
-          const mult = leafMode === 'breeze' ? 2.2 : 1.0;
+          var mult = leafMode === 'breeze' ? 2.2 : 1.0;
           leaf.y += leaf.speedY * mult;
           leaf.x += leaf.speedX * mult;
           leaf.rot += leaf.rotSpeed * mult;
@@ -3233,7 +3191,7 @@
     }
 
     function cycleLeafBreeze() {
-      const label = document.getElementById('leaves-label');
+      var label = document.getElementById('leaves-label');
       if (leafMode === 'gentle') {
         leafMode = 'breeze';
         if (label) label.textContent = 'Leaves: Breeze';
@@ -3246,13 +3204,10 @@
       }
     }
 
-    // -------------------------------------------------------------------------
-    // 12. THEME MOOD SELECTOR
-    // -------------------------------------------------------------------------
     function setThemeMood(theme) {
       document.body.setAttribute('data-theme', theme);
-      ['kensington', 'winchester', 'twilight'].forEach(t => {
-        const btn = document.getElementById('theme-' + t);
+      ['kensington', 'winchester', 'twilight'].forEach(function(t) {
+        var btn = document.getElementById('theme-' + t);
         if (btn) {
           if (t === theme) {
             btn.className = 'px-2 py-0.5 rounded-lg bg-autumn-100 text-autumn-800 font-semibold transition';
@@ -3263,35 +3218,30 @@
       });
     }
 
-    // -------------------------------------------------------------------------
-    // 13. PREPLY SUMMARY CLIPBOARD EXPORT
-    // -------------------------------------------------------------------------
     function copyPreplySummary() {
-      const summaryText = 
-        \"🌿 Louie's English Studio - Lesson Notes (24 Oct 2026)\\n\" +
-        \"Student: Worachon P. | Tutor: Louie\\n\\n\" +
-        \"✨ Topics Covered Today:\\n\" +
-        \"• Chulalongkorn Day (วันปิยมหาราช) & Ceremonial Pith Helmets\\n\" +
-        \"• Richard Dawkins, The Selfish Gene, Memes & Digital Gatekeepers\\n\" +
-        \"• The Brain's Pain Paradox: Awake Craniotomies & Dura Mater Traction\\n\" +
-        \"• Gastric Emptying Kinetics & Alcohol Absorption\\n\" +
-        \"• Optics: Snell's Law, Total Internal Reflection & Cladding in Fiber Cables\\n\" +
-        \"• Work-Life Balance: London Overwork vs Munich 40-hr Statutory Laws\\n\\n\" +
-        \"🌟 6 Natural Strengths Celebrated & 6 Gentle Phrasing Polishes\\n\" +
-        \"🎯 Next Lesson (Sunday): 30-Minute Fast Recall ('wham, bam, thank you, ma'am')\\n\\n\" +
-        \"Explore your full interactive sanctuary notes, audio pronunciations, and flashcards on GitHub Pages!\";
+      var summaryText = 
+        "🌿 Louie's English Studio - Lesson Notes (24 Oct 2026)\n" +
+        "Student: Worachon P. | Tutor: Louie\n\n" +
+        "✨ Topics Covered Today:\n" +
+        "• Chulalongkorn Day (วันปิยมหาราช) & Ceremonial Pith Helmets\n" +
+        "• Richard Dawkins, The Selfish Gene, Memes & Digital Gatekeepers\n" +
+        "• The Brain's Pain Paradox: Awake Craniotomies & Dura Mater Traction\n" +
+        "• Gastric Emptying Kinetics & Alcohol Absorption\n" +
+        "• Optics: Snell's Law, Total Internal Reflection & Cladding in Fiber Cables\n" +
+        "• Work-Life Balance: London Overwork vs Munich 40-hr Statutory Laws\n\n" +
+        "🌟 6 Natural Strengths Celebrated & 6 Gentle Phrasing Polishes\n" +
+        "🎯 Next Lesson (Sunday): 30-Minute Fast Recall ('wham, bam, thank you, ma'am')\n\n" +
+        "Explore your full interactive sanctuary notes, audio pronunciations, and flashcards on GitHub Pages!";
 
-      navigator.clipboard.writeText(summaryText).then(() => {
+      navigator.clipboard.writeText(summaryText).then(function() {
         alert('✨ Preply lesson summary copied to your clipboard!');
-      }).catch(() => {
+      }).catch(function() {
         alert('Could not copy automatically. Please copy the text from the notes tab.');
       });
     }
 
-    // -------------------------------------------------------------------------
-    // 14. INITIALIZATION
-    // -------------------------------------------------------------------------
-    window.addEventListener('DOMContentLoaded', () => {
+    // Startup DOM Listener
+    window.addEventListener('DOMContentLoaded', function() {
       try {
         renderTranscript();
         renderVocabGrid();
@@ -3305,7 +3255,6 @@
         renderQuiz();
         initLeafCanvas();
 
-        // Select initial spotlight item
         inspectVocab('chulalongkorn-day');
 
         if (typeof lucide !== 'undefined' && lucide.createIcons) {
