@@ -143,11 +143,18 @@ function v(key, displayWord) {
 }
 ```
 
-#### Rule 3: Avoid Nested Template Literal Expansion in Build Scripts
-When using PowerShell or Node to generate `index.html`, do NOT write meta-scripts with unescaped nested template literals. Either:
-- Write the HTML file directly using clean string concatenation, or
-- Read the template and data from clean UTF-8 source files, or
-- Explicitly escape nested backticks (`\``) and variables (`\${...}`) so the generator does not strip or corrupt them.
+#### Rule 3: Avoid Nested Template Literal & Heredoc Escaping Collisions
+When generating `index.html` via PowerShell automation scripts:
+- **Never use PowerShell double-quoted heredocs (`@" ... "@`)** for JavaScript code blocks. In double-quoted heredocs, PowerShell parses `\"`, `\\'`, and `$variable` substitutions. When it outputs `\\'`, JavaScript parses it as a literal backslash followed by an unescaped single quote that terminates the string early, immediately throwing `SyntaxError: Unexpected string` at line 848 and leaving the entire page blank!
+- **Always use PowerShell single-quoted literal heredocs (`@' ... '@`)** for HTML markup and JavaScript blocks. PowerShell treats single-quoted heredocs completely verbatim without touching any backslashes, single quotes, double quotes, or JavaScript `${...}` template interpolations.
+- Combine blocks cleanly using simple string concatenation:
+  ```powershell
+  $fullHtml = $htmlMarkup + "`n" + $jsPrefix + $vocabDbBlock + $jsMid + $transcriptTurnsBlock + $jsSuffix
+  ```
+- Write output HTML directly using:
+  ```powershell
+  [System.IO.File]::WriteAllText($path, $fullHtml, [System.Text.UTF8Encoding]::new($false))
+  ```
 
 #### Rule 4: Windows PowerShell 5.1 UTF-8 BOM Rule
 When writing `.ps1` automation scripts on Windows:
