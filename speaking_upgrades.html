@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Haytham's Speaking Upgrade Guide | Louie's English Studio</title>
+
+  <!-- Google Fonts: Cormorant Garamond, Plus Jakarta Sans, JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            parchment: {
+              50: '#fbf9f5',
+              100: '#f6f1e7',
+              200: '#ede3d1',
+              300: '#dfd0b5',
+              400: '#cbb38e',
+              500: '#b6966b',
+            },
+            autumn: {
+              50: '#fcf6f0',
+              100: '#f7e9db',
+              200: '#eed0b5',
+              300: '#e2b086',
+              400: '#d38c57',
+              500: '#be6f38',
+              600: '#a3582b',
+              700: '#854524',
+              800: '#6c3921',
+            },
+            sage: {
+              50: '#f4f7f5',
+              100: '#e4ece7',
+              200: '#cadad1',
+              300: '#a5bfb1',
+              400: '#7b9f8d',
+              500: '#5b826f',
+              600: '#476858',
+              700: '#3a5448',
+              800: '#30443b',
+            },
+            slatewarm: {
+              700: '#3d4441',
+              800: '#2b312e',
+              900: '#1e2321',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+  <style>
+    :root {
+      --bg-base: #f9f6f0;
+      --bg-card: rgba(255, 253, 249, 0.94);
+      --bg-subcard: rgba(255, 255, 255, 0.96);
+      --border-soft: #e6decb;
+      --border-accent: #d9c8b0;
+      --text-main: #2b312e;
+      --text-muted: #5c6660;
+      --grad-1: rgba(238, 208, 181, 0.42);
+      --grad-2: rgba(202, 218, 209, 0.48);
+      --grad-3: rgba(246, 241, 231, 0.70);
+    }
+
+    body[data-theme="winchester"] {
+      --bg-base: #f3f6f5;
+      --bg-card: rgba(252, 254, 253, 0.93);
+      --bg-subcard: rgba(255, 255, 255, 0.97);
+      --border-soft: #d7e2dc;
+      --border-accent: #b8ccc2;
+      --text-main: #26312d;
+      --text-muted: #52635c;
+      --grad-1: rgba(202, 218, 209, 0.50);
+      --grad-2: rgba(219, 228, 238, 0.48);
+      --grad-3: rgba(244, 240, 230, 0.55);
+    }
+
+    body[data-theme="twilight"] {
+      --bg-base: #f5efe6;
+      --bg-card: rgba(253, 249, 242, 0.94);
+      --bg-subcard: rgba(255, 252, 247, 0.97);
+      --border-soft: #e2d2be;
+      --border-accent: #cfaea0;
+      --text-main: #2d2622;
+      --text-muted: #665850;
+      --grad-1: rgba(226, 176, 134, 0.36);
+      --grad-2: rgba(214, 196, 176, 0.42);
+      --grad-3: rgba(235, 220, 202, 0.55);
+    }
+
+    body {
+      background-color: var(--bg-base);
+      background-image:
+        radial-gradient(at 10% 10%, var(--grad-1) 0px, transparent 52%),
+        radial-gradient(at 88% 15%, var(--grad-2) 0px, transparent 50%),
+        radial-gradient(at 50% 85%, var(--grad-3) 0px, transparent 55%);
+      background-attachment: fixed;
+      color: var(--text-main);
+      transition: background-color 0.45s ease, color 0.35s ease;
+    }
+
+    .sanctuary-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      box-shadow: 0 10px 30px -12px rgba(43, 49, 46, 0.08);
+      backdrop-filter: blur(8px);
+    }
+
+    .sanctuary-subcard {
+      background-color: var(--bg-subcard);
+      border: 1px solid var(--border-soft);
+    }
+
+    .filler-strike {
+      background: rgba(220, 38, 38, 0.10);
+      color: #991b1b;
+      padding: 0 4px;
+      border-radius: 4px;
+      text-decoration: line-through;
+      font-weight: 600;
+    }
+
+    .upgrade-highlight {
+      background: rgba(91, 130, 111, 0.14);
+      color: #264336;
+      padding: 0 5px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body class="font-sans antialiased min-h-screen flex flex-col" data-theme="kensington">
+
+  <!-- Sticky Top Navigation -->
+  <header class="sticky top-0 z-40 border-b border-stone-200/80 bg-parchment-50/90 backdrop-blur-md">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-autumn-500 to-autumn-700 text-white flex items-center justify-center shadow-sm">
+          <i data-lucide="sparkles" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <h1 class="font-serif font-bold text-lg sm:text-xl text-slatewarm-900 leading-tight">
+            Haytham's Speaking Upgrade Guide
+          </h1>
+          <p class="text-[11px] sm:text-xs text-stone-500 font-mono">
+            Based on Lesson 24 Oct 2026 &bull; Louie's English Studio
+          </p>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-2">
+        <!-- Audio Speed Toggle -->
+        <button id="speed-toggle-btn" onclick="toggleSpeechSpeed()" class="px-3 py-1.5 rounded-xl text-xs font-mono font-semibold bg-white border border-stone-200 text-stone-700 hover:bg-parchment-100 transition flex items-center gap-1.5" title="Toggle voice speed">
+          <i data-lucide="gauge" class="w-3.5 h-3.5 text-autumn-600"></i>
+          <span id="speed-label">Voice: 1.0×</span>
+        </button>
+
+        <!-- Theme Switcher -->
+        <div class="flex items-center bg-white border border-stone-200 rounded-xl p-0.5 text-[11px] font-semibold">
+          <button onclick="setTheme('kensington')" id="thm-kensington" class="px-2.5 py-1 rounded-lg bg-autumn-600 text-white transition">Stone</button>
+          <button onclick="setTheme('winchester')" id="thm-winchester" class="px-2.5 py-1 rounded-lg text-stone-600 hover:bg-stone-100 transition">Mist</button>
+          <button onclick="setTheme('twilight')" id="thm-twilight" class="px-2.5 py-1 rounded-lg text-stone-600 hover:bg-stone-100 transition">Twilight</button>
+        </div>
+
+        <a href="./lesson_10-24-2026.html" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-sage-700 text-white hover:bg-sage-800 transition flex items-center gap-1.5">
+          <i data-lucide="book-open" class="w-3.5 h-3.5"></i>
+          <span>Lesson Notes (24 Oct)</span>
+        </a>
+        <a href="./pre_lesson_pyramids.html" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-white border border-stone-200 text-stone-700 hover:bg-parchment-100 transition flex items-center gap-1.5">
+          <i data-lucide="landmark" class="w-3.5 h-3.5 text-autumn-600"></i>
+          <span>Pyramids Guide</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto w-full px-4 sm:px-6 py-8 space-y-8 flex-1">
+
+    <!-- Hero Summary -->
+    <section class="sanctuary-card rounded-3xl p-6 sm:p-8 space-y-5">
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+        <div class="space-y-3 max-w-2xl">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-semibold bg-autumn-100 text-autumn-800">
+            <i data-lucide="target" class="w-3.5 h-3.5"></i>
+            Next-Level Fluency Roadmap
+          </span>
+          <h2 class="font-serif text-3xl sm:text-4xl font-bold text-slatewarm-900 leading-tight">
+            From "Understood" to Effortless, Authoritative English
+          </h2>
+          <p class="text-sm sm:text-base text-stone-600 leading-relaxed">
+            You already express complex medical, scientific, and philosophical ideas naturally—from <em>awake craniotomies</em> and the <em>dura mater</em> to <em>fundamental vs. applied research</em>. These 6 targeted upgrades are the exact habits that will make your spoken English sound sharper, faster, and ready for international medical stages.
+          </p>
+        </div>
+
+        <!-- Quick Focus Metrics -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-2 gap-3 shrink-0">
+          <div class="sanctuary-subcard rounded-2xl p-3.5 text-center">
+            <div class="font-serif text-2xl font-bold text-autumn-700">6</div>
+            <div class="text-[11px] font-mono text-stone-500">Core Upgrade Areas</div>
+          </div>
+          <div class="sanctuary-subcard rounded-2xl p-3.5 text-center">
+            <div class="font-serif text-2xl font-bold text-sage-700">20+</div>
+            <div class="text-[11px] font-mono text-stone-500">Real Lesson Examples</div>
+          </div>
+          <div class="sanctuary-subcard rounded-2xl p-3.5 text-center">
+            <div class="font-serif text-2xl font-bold text-slatewarm-900">2 min</div>
+            <div class="text-[11px] font-mono text-stone-500">Live "No-Like" Drill</div>
+          </div>
+          <div class="sanctuary-subcard rounded-2xl p-3.5 text-center">
+            <div class="font-serif text-2xl font-bold text-autumn-600">8</div>
+            <div class="text-[11px] font-mono text-stone-500">Quick-Fire Quiz Items</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Strengths First Banner -->
+      <div class="rounded-2xl bg-sage-50/90 border border-sage-200 p-4 sm:p-5 flex flex-col sm:flex-row gap-3 items-start sm:items-center">
+        <div class="w-9 h-9 rounded-xl bg-sage-600 text-white flex items-center justify-center shrink-0">
+          <i data-lucide="award" class="w-5 h-5"></i>
+        </div>
+        <div class="text-xs sm:text-sm text-sage-900 leading-relaxed">
+          <strong>What You Already Do Great:</strong> You never shut down when searching for a word, you use high-level clinical terms accurately (<em>occipital, cardiovascular system, absorption site</em>), and you already catch and self-correct grammar mid-sentence (e.g., <em>"that is not on the plan &rarr; that are not on the plan"</em> at 52:55).
+        </div>
+      </div>
+    </section>
+
+    <!-- Category Filter Bar -->
+    <section class="flex flex-wrap items-center justify-between gap-3">
+      <div class="flex flex-wrap gap-2" id="pillar-filters">
+        <button onclick="filterPillars('all')" data-cat="all" class="pillar-btn px-3.5 py-2 rounded-xl text-xs font-semibold bg-sage-700 text-white shadow-xs transition">All 6 Pillars</button>
+        <button onclick="filterPillars('fillers')" data-cat="fillers" class="pillar-btn px-3.5 py-2 rounded-xl text-xs font-semibold bg-white border border-stone-200 text-stone-700 hover:bg-parchment-100 transition">1. Cutting "Like"</button>
+        <button onclick="filterPillars('grammar')" data-cat="grammar" class="pillar-btn px-3.5 py-2 rounded-xl text-xs font-semibold bg-white border border-stone-200 text-stone-700 hover:bg-parchment-100 transition">2. Grammar Under Speed</button>
+        <button onclick="filterPillars('nouns')" data-cat="nouns" class="pillar-btn px-3.5 py-2 rounded-xl text-xs font-semibold bg-white border border-stone-200 text-stone-700 hover:bg-parchment-100 transition">3. Plurals &amp; Uncountables</button>
+        <button onclick="filterPillars('collocations')" data-cat="collocations" class="pillar-btn px-3.5 py-2 rounded-xl text-xs font-semibold bg-white border border-stone-200 text-stone-700 hover:bg-parchment-100 transition">4. Natural Collocations</button>
+        <button onclick="filterPillars('pronunciation')" data-cat="pronunciation" class="pillar-btn px-3.5 py-2 rounded-xl text-xs font-semibold bg-white border border-stone-200 text-stone-700 hover:bg-parchment-100 transition">5. Pronunciation Clarity</button>
+        <button onclick="filterPillars('structure')" data-cat="structure" class="pillar-btn px-3.5 py-2 rounded-xl text-xs font-semibold bg-white border border-stone-200 text-stone-700 hover:bg-parchment-100 transition">6. Headline-First Speed</button>
+      </div>
+    </section>
+
+    <!-- Upgrade Pillars Container -->
+    <section id="pillars-container" class="space-y-6"></section>
+
+    <!-- Live Classroom Tool: 2-Minute "No-Like" Challenge & Buffer Bank -->
+    <section class="sanctuary-card rounded-3xl p-6 sm:p-8 space-y-6">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-stone-200/80 pb-5">
+        <div>
+          <span class="text-xs font-mono font-bold uppercase tracking-wider text-autumn-700">Live Lesson Tool</span>
+          <h2 class="font-serif text-2xl sm:text-3xl font-bold text-slatewarm-900">The 2-Minute "No-Like" Challenge</h2>
+          <p class="text-xs sm:text-sm text-stone-600 mt-1">
+            Use this during your Sunday rapid-recall session. Pick a topic, start the 2-minute timer, and replace filler <em>"like"</em> with a clean 1-second pause or an Upgrade Buffer below.
+          </p>
+        </div>
+
+        <!-- Timer + Counter Widget -->
+        <div class="flex flex-wrap items-center gap-3">
+          <div class="sanctuary-subcard rounded-2xl px-4 py-2.5 flex items-center gap-3">
+            <div class="text-center">
+              <div id="timer-display" class="font-mono text-2xl font-bold text-slatewarm-900">02:00</div>
+              <div class="text-[10px] font-mono text-stone-400 uppercase">Timer</div>
+            </div>
+            <div class="flex gap-1.5">
+              <button onclick="toggleTimer()" id="timer-start-btn" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-sage-700 text-white hover:bg-sage-800 transition">Start</button>
+              <button onclick="resetTimer()" class="px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-stone-100 text-stone-700 hover:bg-stone-200 transition">Reset</button>
+            </div>
+          </div>
+
+          <div class="sanctuary-subcard rounded-2xl px-4 py-2.5 flex items-center gap-3">
+            <div class="text-center">
+              <div id="like-count" class="font-mono text-2xl font-bold text-autumn-700">0</div>
+              <div class="text-[10px] font-mono text-stone-400 uppercase">"Like" Tally</div>
+            </div>
+            <div class="flex gap-1.5">
+              <button onclick="bumpLike(1)" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-autumn-600 text-white hover:bg-autumn-700 transition">+1 Like</button>
+              <button onclick="bumpLike(0)" class="px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-stone-100 text-stone-700 hover:bg-stone-200 transition">Clear</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Upgrade Buffer Bank -->
+      <div>
+        <h3 class="font-serif text-xl font-bold text-slatewarm-900 mb-3">Your "Upgrade Buffer" Bank (Use Instead of "Like")</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          <div class="sanctuary-subcard rounded-2xl p-4 space-y-1.5">
+            <div class="text-[10px] font-mono uppercase font-bold text-autumn-700">Giving Examples</div>
+            <div class="font-semibold text-sm text-slatewarm-900">"For instance..." / "Such as..."</div>
+            <p class="text-xs text-stone-500">Replaces: <em>"like, a research question"</em></p>
+          </div>
+          <div class="sanctuary-subcard rounded-2xl p-4 space-y-1.5">
+            <div class="text-[10px] font-mono uppercase font-bold text-sage-700">Clarifying</div>
+            <div class="font-semibold text-sm text-slatewarm-900">"Essentially..." / "In other words..."</div>
+            <p class="text-xs text-stone-500">Replaces: <em>"like, it's about..."</em></p>
+          </div>
+          <div class="sanctuary-subcard rounded-2xl p-4 space-y-1.5">
+            <div class="text-[10px] font-mono uppercase font-bold text-autumn-700">Being Precise</div>
+            <div class="font-semibold text-sm text-slatewarm-900">"Specifically..." / "Particularly..."</div>
+            <p class="text-xs text-stone-500">Replaces: <em>"especially, like, speaking skill"</em></p>
+          </div>
+          <div class="sanctuary-subcard rounded-2xl p-4 space-y-1.5">
+            <div class="text-[10px] font-mono uppercase font-bold text-sage-700">Buying Time</div>
+            <div class="font-semibold text-sm text-slatewarm-900">[1-sec silent pause] / "Let's see..."</div>
+            <p class="text-xs text-stone-500">Silence sounds confident and deliberate.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Random 2-Minute Prompt Generator -->
+      <div class="rounded-2xl bg-parchment-100/80 border border-parchment-300 p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <div>
+          <span class="text-[10px] font-mono font-bold uppercase text-autumn-700 block">Rapid-Fire Practice Prompt</span>
+          <p id="prompt-text" class="font-serif text-lg font-semibold text-slatewarm-900">
+            "Why is fundamental science just as important as applied medicine?"
+          </p>
+        </div>
+        <button onclick="nextPrompt()" class="px-3.5 py-2 rounded-xl text-xs font-semibold bg-white border border-stone-200 text-slatewarm-900 hover:bg-parchment-50 transition shrink-0 flex items-center gap-1.5">
+          <i data-lucide="shuffle" class="w-3.5 h-3.5 text-autumn-600"></i>
+          <span>New Prompt</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Interactive Quick-Fire Upgrade Quiz -->
+    <section class="sanctuary-card rounded-3xl p-6 sm:p-8 space-y-5">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-stone-200/80 pb-4">
+        <div>
+          <span class="text-xs font-mono font-bold uppercase tracking-wider text-sage-700">Interactive Practice</span>
+          <h2 class="font-serif text-2xl sm:text-3xl font-bold text-slatewarm-900">Spot &amp; Upgrade Quiz</h2>
+          <p class="text-xs sm:text-sm text-stone-600">Pick the cleanest, most natural English version of sentences from your lesson.</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <span id="quiz-score-badge" class="px-3 py-1.5 rounded-xl text-xs font-mono font-bold bg-sage-100 text-sage-800">Score: 0 / 8</span>
+          <button onclick="resetQuiz()" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-white border border-stone-200 text-stone-700 hover:bg-parchment-100 transition">Reset</button>
+        </div>
+      </div>
+
+      <div id="quiz-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+    </section>
+
+  </main>
+
+  <footer class="border-t border-stone-200/80 bg-parchment-50/70 py-5 mt-8">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-stone-500">
+      <span>Haytham's English Studio &bull; Crafted from Transcript 24 Oct 2026</span>
+      <span class="font-mono">Tutor: Louie (Lewis O'Shea)</span>
+    </div>
+  </footer>
+
+  <script>
+    let speechRate = 1.0;
+
+    function toggleSpeechSpeed() {
+      speechRate = speechRate === 1.0 ? 0.85 : 1.0;
+      document.getElementById('speed-label').textContent = 'Voice: ' + speechRate.toFixed(2).replace('.00', '.0') + '×';
+    }
+
+    function speakText(text) {
+      if (!('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(text);
+      utter.lang = 'en-GB';
+      utter.rate = speechRate;
+      const voices = window.speechSynthesis.getVoices();
+      const gbVoice = voices.find(v => v.lang && v.lang.startsWith('en-GB'));
+      if (gbVoice) utter.voice = gbVoice;
+      window.speechSynthesis.speak(utter);
+    }
+
+    function setTheme(theme) {
+      document.body.setAttribute('data-theme', theme);
+      ['kensington', 'winchester', 'twilight'].forEach(t => {
+        const btn = document.getElementById('thm-' + t);
+        if (!btn) return;
+        if (t === theme) {
+          btn.className = 'px-2.5 py-1 rounded-lg bg-autumn-600 text-white transition';
+        } else {
+          btn.className = 'px-2.5 py-1 rounded-lg text-stone-600 hover:bg-stone-100 transition';
+        }
+      });
+    }
+
+    const PILLARS = [
+      {
+        id: 'fillers',
+        number: '01',
+        title: 'Cut Back on "Like" as a Thinking Filler',
+        badge: 'Highest Impact',
+        badgeColor: 'bg-autumn-100 text-autumn-800',
+        summary: 'You use "like" as a mental pause button while your brain fetches the next idea. Replacing it with a 1-second silent pause or a purposeful connector instantly makes you sound calmer and more authoritative.',
+        examples: [
+          {
+            time: '06:42',
+            spokenHtml: 'I had a, <span class="filler-strike">like, like,</span> a research question, or, <span class="filler-strike">like,</span> some scientific question in mind.',
+            upgraded: 'I had a research question—or a scientific question—in mind.',
+            why: 'A short breath or dash replaces three fillers and keeps the listener focused on your curiosity.'
+          },
+          {
+            time: '12:29',
+            spokenHtml: 'Because there are so many, <span class="filler-strike">like,</span> specialists here.',
+            upgraded: 'Because there are already so many specialists here.',
+            why: 'Removing "like" lets the emphasis land naturally on "so many specialists."'
+          },
+          {
+            time: '45:19',
+            spokenHtml: 'One of the very good, <span class="filler-strike">like,</span> real-life examples is, <span class="filler-strike">like,</span> the computer chip.',
+            upgraded: 'One great real-life example is the computer chip.',
+            why: 'Clean, direct delivery makes your scientific example land with much more impact.'
+          },
+          {
+            time: '56:10',
+            spokenHtml: 'If I cannot communicate in English, <span class="filler-strike">like,</span> especially, <span class="filler-strike">like,</span> speaking skill...',
+            upgraded: 'If I cannot communicate in English—particularly in my speaking skills...',
+            why: 'Swap "like, especially, like" for "particularly" or "especially" on its own.'
+          }
+        ]
+      },
+      {
+        id: 'grammar',
+        number: '02',
+        title: 'Grammar Under Speed (Modals, Auxiliaries & Agreement)',
+        badge: 'Quick Wins',
+        badgeColor: 'bg-sage-100 text-sage-800',
+        summary: 'When you speak slowly, your grammar is accurate. Under fast conversation, small slips appear with modal verbs, "is" vs. "has," and third-person singular "-s."',
+        examples: [
+          {
+            time: '06:42',
+            spokenHtml: 'It can just <span class="filler-strike">went</span> to the teacher and <span class="filler-strike">asked</span> them.',
+            upgraded: 'I could just go to the teacher and ask them.',
+            why: 'Modal verbs (can, could, would, should) always take the base verb: "go" and "ask," never past tense "went" or "asked."'
+          },
+          {
+            time: '45:19',
+            spokenHtml: 'And it <span class="filler-strike">is</span> totally changed my mind, my perspective on doing research.',
+            upgraded: 'And it completely changed my perspective on doing research.',
+            why: 'Use simple past ("changed") or present perfect active ("it has totally changed"), not "is changed."'
+          },
+          {
+            time: '04:22',
+            spokenHtml: 'But it\'s actually good—I mean, <span class="filler-strike">comparing to the years is been built</span>.',
+            upgraded: 'It\'s actually good, considering how long ago it was built.',
+            why: 'Use "considering how long ago it was built" or "compared to when it was constructed."'
+          },
+          {
+            time: '35:22',
+            spokenHtml: 'Because alcohol <span class="filler-strike">make</span> your... it <span class="filler-strike">do</span> something into our brain.',
+            upgraded: 'Because alcohol affects your brain—it disrupts certain pathways.',
+            why: 'Uncountable/singular subjects ("alcohol," "it") take "-s": "makes," "does," "affects," "disrupts."'
+          }
+        ]
+      },
+      {
+        id: 'nouns',
+        number: '03',
+        title: 'Singular, Plural & Uncountable Nouns',
+        badge: 'Precision',
+        badgeColor: 'bg-amber-100 text-amber-800',
+        summary: 'Watch out for uncountable words that never take "a" or "-s" (permission, English), and countable categories that need plural "-s" (skills, facts, thoughts, receptors).',
+        examples: [
+          {
+            time: '06:42',
+            spokenHtml: 'They would give me <span class="filler-strike">permissions</span>... in order to get <span class="filler-strike">a permission</span> to do it.',
+            upgraded: 'They would give me permission... in order to get permission to do it.',
+            why: '"Permission" is uncountable in English—no "a" and no "-s."'
+          },
+          {
+            time: '56:10',
+            spokenHtml: 'Communicate in <span class="filler-strike">a</span> proper English... explain my <span class="filler-strike">thought</span>... speaking <span class="filler-strike">skill</span>.',
+            upgraded: 'Communicate in proper English... explain my thoughts... speaking skills.',
+            why: '"English" is uncountable (no "a"), while "thoughts" and "skills" are almost always plural in this context.'
+          },
+          {
+            time: '33:02',
+            spokenHtml: 'One of the <span class="filler-strike">fact</span>... our brain doesn\'t have its own pain <span class="filler-strike">receptor</span>.',
+            upgraded: 'One of the facts... our brain doesn\'t have its own pain receptors.',
+            why: '"One of the..." is always followed by a plural noun ("one of the facts").'
+          }
+        ]
+      },
+      {
+        id: 'collocations',
+        number: '04',
+        title: 'Natural Prepositions & Native Collocations',
+        badge: 'Natural Flow',
+        badgeColor: 'bg-sage-100 text-sage-800',
+        summary: 'Small word-choice upgrades turn a literal translation into crisp, natural English.',
+        examples: [
+          {
+            time: '22:50',
+            spokenHtml: 'We have to <span class="filler-strike">spend our time into</span> studying rather than sleeping.',
+            upgraded: 'We have to dedicate our time to studying rather than sleeping.',
+            why: 'Say "spend time + -ing" (no "into") or "dedicate time to + -ing."'
+          },
+          {
+            time: '56:10',
+            spokenHtml: 'It would be very hard for me to <span class="filler-strike">get into the top point of my space</span>.',
+            upgraded: 'It would be very hard for me to reach the top of my field.',
+            why: 'In professional/medical English, use "reach the top of my field" or "reach the pinnacle of my specialty."'
+          },
+          {
+            time: '06:42 / 45:19',
+            spokenHtml: 'Back into my <span class="filler-strike">high school era</span>.',
+            upgraded: 'Back in my high school days.',
+            why: '"Era" sounds like internet slang or historical periods; "high school days" or "back in high school" sounds natural.'
+          },
+          {
+            time: '52:55',
+            spokenHtml: 'So many events coming up that are <span class="filler-strike">not on the plan</span>.',
+            upgraded: 'So many unexpected events that weren\'t in my plan.',
+            why: 'Use "in the plan" / "in my schedule" (or simply "unexpected" / "unplanned").'
+          }
+        ]
+      },
+      {
+        id: 'pronunciation',
+        number: '05',
+        title: 'Pronunciation Clarity Targets',
+        badge: 'Audio Check',
+        badgeColor: 'bg-autumn-100 text-autumn-800',
+        summary: 'Three words from your lesson were misheard by the speech-to-text tool—these are great quick pronunciation checks so international listeners catch every word effortlessly.',
+        examples: [
+          {
+            time: '17:00',
+            spokenHtml: 'Misheard as: <span class="filler-strike">"T-shirt in high school"</span>',
+            upgraded: 'My teacher in high school.',
+            why: 'Keep the "-ch-" crisp and lengthen the "-er" ending: /ˈtiː.tʃər/ (not /ˈtiː.ʃɜːt/).'
+          },
+          {
+            time: '22:50',
+            spokenHtml: 'Misheard as: <span class="filler-strike">"grass anatomy"</span>',
+            upgraded: 'We have gross anatomy and pharmacology.',
+            why: '"Gross" uses the long "oh" vowel /ɡrəʊs/, not the "ah" vowel in "grass" /ɡrɑːs/.'
+          },
+          {
+            time: '45:19',
+            spokenHtml: 'Misheard as: <span class="filler-strike">"computer ship"</span>',
+            upgraded: 'A good real-life example is the computer chip.',
+            why: 'Make sure "ch-" (/tʃɪp/) starts with a sharp stop-burst rather than a soft "sh-" (/ʃɪp/).'
+          }
+        ]
+      },
+      {
+        id: 'structure',
+        number: '06',
+        title: 'Reaction Speed & "Headline-First" Answers',
+        badge: 'Sunday Focus',
+        badgeColor: 'bg-slatewarm-700 text-white',
+        summary: 'At the end of the lesson (59:01), we planned to speed up your reaction time. Leading with a short 1-sentence answer stops you from drifting into filler words while organizing your thoughts.',
+        examples: [
+          {
+            time: '52:55',
+            spokenHtml: 'For me, my perfect day would be a day that I wake up very fresh mind, fresh heart, and, <span class="filler-strike">like, what the day is called...</span>',
+            upgraded: 'My perfect day is one where everything goes to plan. I wake up refreshed, stick to my schedule, and get to bed early.',
+            why: 'State the headline first ("one where everything goes to plan"), then give 2–3 clean details.'
+          },
+          {
+            time: '33:45',
+            spokenHtml: 'I haven\'t learned it yet, but I guess that they have... <span class="filler-strike">uh, what\'s it called? It\'s new...</span>',
+            upgraded: 'I haven\'t studied that yet, but I believe different headaches involve different nerves—like the occipital nerve.',
+            why: 'If a technical term slips your mind for a moment, give the simple category ("different nerves") and keep moving.'
+          }
+        ]
+      }
+    ];
+
+    function renderPillars(filterCat = 'all') {
+      const container = document.getElementById('pillars-container');
+      const items = filterCat === 'all' ? PILLARS : PILLARS.filter(p => p.id === filterCat);
+
+      container.innerHTML = items.map(pillar => `
+        <article class="sanctuary-card rounded-3xl p-6 sm:p-7 space-y-5">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-stone-200/80 pb-4">
+            <div class="flex items-center gap-3">
+              <span class="w-9 h-9 rounded-xl bg-parchment-200 text-slatewarm-900 font-mono font-bold text-sm flex items-center justify-center">${pillar.number}</span>
+              <div>
+                <h3 class="font-serif text-xl sm:text-2xl font-bold text-slatewarm-900">${pillar.title}</h3>
+              </div>
+            </div>
+            <span class="px-3 py-1 rounded-full text-xs font-mono font-bold self-start sm:self-center ${pillar.badgeColor}">${pillar.badge}</span>
+          </div>
+
+          <p class="text-xs sm:text-sm text-stone-600 leading-relaxed">${pillar.summary}</p>
+
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            ${pillar.examples.map(ex => {
+              const safeText = ex.upgraded.replace(/'/g, "\\'");
+              return `
+                <div class="sanctuary-subcard rounded-2xl p-4 space-y-3 flex flex-col justify-between">
+                  <div class="space-y-2.5">
+                    <div class="flex items-center justify-between text-[11px] font-mono text-stone-400">
+                      <span>🕒 ${ex.time}</span>
+                      <button onclick="speakText('${safeText}')" class="inline-flex items-center gap-1 px-2 py-1 rounded-lg bg-parchment-100 text-autumn-700 hover:bg-autumn-100 transition font-sans font-semibold text-[11px]">
+                        <i data-lucide="volume-2" class="w-3.5 h-3.5"></i>
+                        <span>Listen</span>
+                      </button>
+                    </div>
+
+                    <div class="rounded-xl bg-stone-50 border border-stone-200/80 p-3 text-xs sm:text-sm text-stone-700">
+                      <span class="block text-[10px] font-mono uppercase font-bold text-stone-400 mb-1">In the Lesson</span>
+                      <p class="italic leading-relaxed">${ex.spokenHtml}</p>
+                    </div>
+
+                    <div class="rounded-xl bg-sage-50 border border-sage-200 p-3 text-xs sm:text-sm text-sage-900">
+                      <span class="block text-[10px] font-mono uppercase font-bold text-sage-700 mb-1">Natural Upgrade</span>
+                      <p class="font-semibold leading-relaxed">"${ex.upgraded}"</p>
+                    </div>
+                  </div>
+
+                  <p class="text-xs text-stone-500 pt-1 border-t border-stone-100">
+                    <strong class="text-slatewarm-800">Why:</strong> ${ex.why}
+                  </p>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        </article>
+      `).join('');
+
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+    }
+
+    function filterPillars(cat) {
+      document.querySelectorAll('.pillar-btn').forEach(btn => {
+        if (btn.dataset.cat === cat) {
+          btn.className = 'pillar-btn px-3.5 py-2 rounded-xl text-xs font-semibold bg-sage-700 text-white shadow-xs transition';
+        } else {
+          btn.className = 'pillar-btn px-3.5 py-2 rounded-xl text-xs font-semibold bg-white border border-stone-200 text-stone-700 hover:bg-parchment-100 transition';
+        }
+      });
+      renderPillars(cat);
+    }
+
+    // Live Timer & Like Tally
+    let timerSeconds = 120;
+    let timerInterval = null;
+    let likeTally = 0;
+
+    function updateTimerDisplay() {
+      const m = String(Math.floor(timerSeconds / 60)).padStart(2, '0');
+      const s = String(timerSeconds % 60).padStart(2, '0');
+      document.getElementById('timer-display').textContent = m + ':' + s;
+    }
+
+    function toggleTimer() {
+      const btn = document.getElementById('timer-start-btn');
+      if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+        btn.textContent = 'Resume';
+        return;
+      }
+      btn.textContent = 'Pause';
+      timerInterval = setInterval(() => {
+        if (timerSeconds > 0) {
+          timerSeconds--;
+          updateTimerDisplay();
+        } else {
+          clearInterval(timerInterval);
+          timerInterval = null;
+          btn.textContent = 'Done!';
+          if (typeof confetti !== 'undefined') confetti({ particleCount: 55, spread: 60, origin: { y: 0.7 } });
+        }
+      }, 1000);
+    }
+
+    function resetTimer() {
+      clearInterval(timerInterval);
+      timerInterval = null;
+      timerSeconds = 120;
+      updateTimerDisplay();
+      document.getElementById('timer-start-btn').textContent = 'Start';
+    }
+
+    function bumpLike(val) {
+      likeTally = val === 0 ? 0 : likeTally + val;
+      document.getElementById('like-count').textContent = likeTally;
+    }
+
+    const PROMPTS = [
+      '"Why is fundamental science just as important as applied medicine?"',
+      '"Explain how alcohol causes a hangover headache in 30 seconds—zero \'like\'!"',
+      '"What does your ideal medical research project look like?"',
+      '"Compare studying in Thailand with visiting a research lab in the US."',
+      '"Describe your perfect day off using a 1-sentence headline first."'
+    ];
+    let promptIdx = 0;
+    function nextPrompt() {
+      promptIdx = (promptIdx + 1) % PROMPTS.length;
+      document.getElementById('prompt-text').textContent = PROMPTS[promptIdx];
+    }
+
+    // Interactive Quiz
+    const QUIZ_ITEMS = [
+      {
+        q: '1. Modal + verb: "I can just ___ to the teacher and ___ them."',
+        options: ['went / asked', 'go / ask', 'going / asking'],
+        answer: 1,
+        explain: 'Modals (can, could, would) always take the base form of the verb.'
+      },
+      {
+        q: '2. Uncountable noun: "They would give me ___ to use the lab."',
+        options: ['a permission', 'permissions', 'permission'],
+        answer: 2,
+        explain: '"Permission" is uncountable—never use "a" or "-s."'
+      },
+      {
+        q: '3. Natural collocation: "We have to dedicate our nights ___."',
+        options: ['into studying', 'to studying', 'for study'],
+        answer: 1,
+        explain: 'Use "dedicate time to + -ing" or "spend time + -ing" (no "into").'
+      },
+      {
+        q: '4. Plural agreement: "One of the ___ that surprised me..."',
+        options: ['fact', 'facts', 'a fact'],
+        answer: 1,
+        explain: '"One of the..." always requires a plural noun ("facts").'
+      },
+      {
+        q: '5. Professional goal: "I want to reach ___."',
+        options: ['the top point of my space', 'the top of my field', 'a top of my career'],
+        answer: 1,
+        explain: '"Reach the top of my field" (or "pinnacle of my specialty") is the natural idiom.'
+      },
+      {
+        q: '6. Filler replacement: "There are many specialists here—___, cardiologists and neurologists."',
+        options: ['like, like', 'for instance', 'what to say'],
+        answer: 1,
+        explain: 'Swap filler "like" for crisp connectors like "for instance" or "such as."'
+      },
+      {
+        q: '7. Active past / present perfect: "Visiting UCLA ___ my perspective."',
+        options: ['is totally changed', 'was totally changed', 'totally changed'],
+        answer: 2,
+        explain: 'Use active "totally changed" (or "has totally changed"), not "is changed."'
+      },
+      {
+        q: '8. Uncountable language: "My goal is to communicate in ___."',
+        options: ['a proper English', 'proper English', 'the proper Englishes'],
+        answer: 1,
+        explain: 'Languages ("English") are uncountable—drop "a."'
+      }
+    ];
+
+    let quizAnswers = {};
+
+    function renderQuiz() {
+      const container = document.getElementById('quiz-container');
+      container.innerHTML = QUIZ_ITEMS.map((item, idx) => {
+        const chosen = quizAnswers[idx];
+        return `
+          <div class="sanctuary-subcard rounded-2xl p-4 space-y-3">
+            <p class="font-semibold text-sm text-slatewarm-900">${item.q}</p>
+            <div class="space-y-1.5">
+              ${item.options.map((opt, oIdx) => {
+                let cls = 'w-full text-left px-3 py-2 rounded-xl text-xs font-medium border transition ';
+                if (chosen === undefined) {
+                  cls += 'bg-white border-stone-200 hover:bg-parchment-100 text-stone-700';
+                } else if (oIdx === item.answer) {
+                  cls += 'bg-sage-100 border-sage-400 text-sage-900 font-bold';
+                } else if (oIdx === chosen) {
+                  cls += 'bg-red-50 border-red-300 text-red-800';
+                } else {
+                  cls += 'bg-stone-50 border-stone-200 text-stone-400';
+                }
+                return `<button onclick="answerQuiz(${idx}, ${oIdx})" ${chosen !== undefined ? 'disabled' : ''} class="${cls}">${opt}</button>`;
+              }).join('')}
+            </div>
+            ${chosen !== undefined ? `<p class="text-xs text-stone-600 pt-1 border-t border-stone-100">${chosen === item.answer ? '✅' : '💡'} ${item.explain}</p>` : ''}
+          </div>
+        `;
+      }).join('');
+
+      const score = Object.keys(quizAnswers).filter(k => quizAnswers[k] === QUIZ_ITEMS[k].answer).length;
+      document.getElementById('quiz-score-badge').textContent = `Score: ${score} / ${QUIZ_ITEMS.length}`;
+    }
+
+    function answerQuiz(qIdx, oIdx) {
+      quizAnswers[qIdx] = oIdx;
+      renderQuiz();
+      const score = Object.keys(quizAnswers).filter(k => quizAnswers[k] === QUIZ_ITEMS[k].answer).length;
+      if (Object.keys(quizAnswers).length === QUIZ_ITEMS.length && score >= 6 && typeof confetti !== 'undefined') {
+        confetti({ particleCount: 70, spread: 70, origin: { y: 0.7 } });
+      }
+    }
+
+    function resetQuiz() {
+      quizAnswers = {};
+      renderQuiz();
+    }
+
+    // Init
+    renderPillars('all');
+    renderQuiz();
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+  </script>
+</body>
+</html>
